@@ -1,13 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML/Graphics.hpp>
-#include <cstdint>
+#include "GameState.h"
+#include "MainMenuState.h"
 
 class Game
 {
 public:
-	Game(uint32_t width = 800, uint32_t height = 600);
+	Game();
 	~Game();
 	void run();
 private:
@@ -16,12 +16,18 @@ private:
 	void render();
 
 	void updateDt();
+
+	void initWindow();
+	void initStates();
+	void initKeys();
 private:
-	sf::RenderWindow window;
-	sf::RectangleShape shape;
+	sf::RenderWindow *window;
+	std::stack<State*> states;
 
 	sf::Clock dtClock;
 	float dt;
+
+	std::unordered_map<std::string, int> supportedKeys;
 };
 
 #endif
