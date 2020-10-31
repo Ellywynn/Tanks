@@ -1,5 +1,5 @@
-﻿  MainMenuState.cpp
-  Game.cpp
+﻿  Game.cpp
   Main.cpp
+  MainMenuState.cpp
   Generating Code...
   Tanks.vcxproj -> D:\GitHub\Tanks\bin\Win32\Debug\Tanks.exe

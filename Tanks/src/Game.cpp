@@ -26,27 +26,11 @@ void Game::run()
 	}
 }
 
-void Game::handleInput()
-{
-	sf::Event ev;
-	while (window->pollEvent(ev))
-	{
-		switch (ev.type)
-		{
-		case sf::Event::Closed:
-			window->close();
-			break;
-		default:
-			break;
-		}
-	}
-}
-
 void Game::update()
 {
-	handleInput();
 	updateDt();
 	if (!states.empty()) {
+		states.top()->handleEvents();
 		states.top()->update(dt);
 		if (states.top()->getQuit()) {
 			states.top()->endState();
@@ -82,12 +66,14 @@ void Game::initWindow()
 	std::string window_title = "";
 	uint32_t framerate = 60;
 	bool vsync = false;
+	bool fullscreen = false;
 
 	if (wcfg.is_open()) {
 		std::getline(wcfg, window_title);
 		wcfg >> window_size.width >> window_size.height;
 		wcfg >> framerate;
 		wcfg >> vsync;
+		wcfg >> fullscreen;
 	}
 	else {
 		std::cerr << "[ERROR]: Cannot open file cfg/window.ini\n";
@@ -95,14 +81,15 @@ void Game::initWindow()
 
 	wcfg.close();
 
-	window = new sf::RenderWindow(window_size, window_title);
+	window = new sf::RenderWindow(window_size, window_title,
+		fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 	window->setFramerateLimit(framerate);
 	window->setVerticalSyncEnabled(vsync);
 }
 
 void Game::initStates()
 {
-	states.push(new MainMenuState(window, &supportedKeys));
+	states.push(new MainMenuState(window, &supportedKeys,&states));
 }
 
 void Game::initKeys()

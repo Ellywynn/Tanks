@@ -1,18 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <cstdint>
-#include <fstream>
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <stack>
-
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-#include <SFML/System.hpp>
+#include "ResourceHolder.h"
 
 class Entity
 {

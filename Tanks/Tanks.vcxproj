@@ -172,6 +172,7 @@
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\ResourceHolder.h" />
     <ClInclude Include="include\State.h" />
     <ClInclude Include="include\MainMenuState.h" />
   </ItemGroup>

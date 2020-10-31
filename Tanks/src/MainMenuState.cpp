@@ -3,10 +3,14 @@
 #include "../include/GameState.h"
 
 MainMenuState::MainMenuState(sf::RenderWindow* window,
-	std::unordered_map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys)
+	std::unordered_map<std::string, int>* supportedKeys,
+	std::stack<State*>* states)
+	: State(window, supportedKeys, states)
 {
 	initKeybinds();
+	loadAssets();
+	initSprites();
+	initButtons();
 }
 
 MainMenuState::~MainMenuState()
@@ -31,29 +35,93 @@ void MainMenuState::initKeybinds()
 	file.close();
 }
 
+void MainMenuState::initButtons()
+{
+	buttons["Play"] = std::unique_ptr<Button>(new Button("Play", 100.f, 100.f, &fonts.get(Fonts::Arial)));
+	buttons["Exit"] = std::unique_ptr<Button>(new Button("Exit", 30.f, 500.f, &fonts.get(Fonts::Arial)));
+}
+
+void MainMenuState::updateButtons()
+{
+	updateMousePositions();
+	for (auto& i : buttons)
+		i.second->update(event, mousePosWindow);
+	if (buttons["Play"]->isButtonPressed())
+		pushGameState();
+	if (buttons["Exit"]->isButtonPressed())
+		quitState();
+}
+
+void MainMenuState::loadAssets()
+{
+	loadTextures();
+	loadSounds();
+	loadFonts();
+	initSprites();
+}
+
+void MainMenuState::loadTextures()
+{
+	textures.load(Textures::Background, "assets/textures/MainMenu/background.jpg");
+}
+
+
+void MainMenuState::loadSounds()
+{
+}
+
+void MainMenuState::loadFonts()
+{
+	fonts.load(Fonts::Arial, "assets/fonts/arial.ttf");
+}
+
+void MainMenuState::initSprites()
+{
+	sprites["background"] = createSprite(textures.get(Textures::Background));
+}
+
+void MainMenuState::pushGameState()
+{
+	states->push(new GameState(window, supportedKeys, states));
+}
+
+sf::Sprite MainMenuState::createSprite(sf::Texture& texture)
+{
+	sf::Sprite sprite(texture);
+	return sprite;
+}
+
 void MainMenuState::updateInput(const float dt)
 {
-	quitState();	
+	
+}
+
+void MainMenuState::quitState()
+{
+	quit = true;
 }
 
 void MainMenuState::endState()
 {
-	std::cout << "Ending state!\n";
+	std::cout << "Ending main menu state\n";
 }
 
-void MainMenuState::updateKeybinds(const float dt)
+void MainMenuState::handleEvents()
 {
-	quitState();
+	while (window->pollEvent(event)) {
+		updateButtons();
+	}
 }
 
 void MainMenuState::update(const float dt)
 {
-	updateMousePositions();
-	updateKeybinds(dt);
 	updateInput(dt);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
 {
-	
+	for (auto& i : sprites)
+		window->draw(i.second);
+	for (auto& i : buttons)
+		i.second->render(*window);
 }

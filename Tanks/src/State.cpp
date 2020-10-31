@@ -1,8 +1,10 @@
 #include "../include/State.h"
 
 State::State(sf::RenderWindow* window,
-	std::unordered_map<std::string, int>* supportedKeys)
+	std::unordered_map<std::string, int>* supportedKeys,
+	std::stack<State*>* states)
 {
+	this->states = states;
 	this->window = window;
 	this->supportedKeys = supportedKeys;
 	quit = false;

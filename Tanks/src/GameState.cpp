@@ -1,8 +1,9 @@
 #include "../include/GameState.h"
 
 GameState::GameState(sf::RenderWindow* window,
-	std::unordered_map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys)
+	std::unordered_map<std::string, int>* supportedKeys,
+	std::stack<State*>* states)
+	: State(window, supportedKeys, states)
 {
 	initKeybinds();
 }
@@ -40,7 +41,23 @@ void GameState::updateInput(const float dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_DOWN"])))
 		player.move(dt, 0.f, 1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_RIGHT"])))
-		player.move(dt, 1.f, 0.f);	
+		player.move(dt, 1.f, 0.f);
+}
+
+void GameState::initButtons()
+{
+}
+
+void GameState::loadAssets()
+{
+}
+
+void GameState::updateButtons()
+{
+}
+
+void GameState::handleEvents()
+{
 }
 
 void GameState::endState()
@@ -48,15 +65,9 @@ void GameState::endState()
 	std::cout << "Ending state!\n";
 }
 
-void GameState::updateKeybinds(const float dt)
-{
-	quitState();
-}
-
 void GameState::update(const float dt)
 {
 	updateMousePositions();
-	updateKeybinds(dt);
 	updateInput(dt);
 	player.update(dt);
 }

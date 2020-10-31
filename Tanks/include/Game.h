@@ -11,7 +11,6 @@ public:
 	~Game();
 	void run();
 private:
-	void handleInput();
 	void update();
 	void render();
 
