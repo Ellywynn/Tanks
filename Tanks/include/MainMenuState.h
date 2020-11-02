@@ -3,14 +3,6 @@
 
 #include "State.h"
 
-enum class Textures {
-	Background = 0
-};
-
-enum class Fonts {
-	Arial = 0
-};
-
 class MainMenuState : public State
 {
 public:

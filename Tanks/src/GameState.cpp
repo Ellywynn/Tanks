@@ -3,9 +3,12 @@
 GameState::GameState(sf::RenderWindow* window,
 	std::unordered_map<std::string, int>* supportedKeys,
 	std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+	: State(window, supportedKeys, states),
+	player(&mousePosWindow, &keybinds)
 {
 	initKeybinds();
+	loadAssets();
+	player.loadAssets(&textures);
 }
 
 GameState::~GameState()
@@ -33,15 +36,6 @@ void GameState::initKeybinds()
 void GameState::updateInput(const float dt)
 {
 	quitState();
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_UP"])))
-		player.move(dt, 0.f, -1.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_LEFT"])))
-		player.move(dt, -1.f, 0.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_DOWN"])))
-		player.move(dt, 0.f, 1.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds["MOVE_RIGHT"])))
-		player.move(dt, 1.f, 0.f);
 }
 
 void GameState::initButtons()
@@ -50,6 +44,8 @@ void GameState::initButtons()
 
 void GameState::loadAssets()
 {
+	textures.load(Textures::Game_PlayerBody, "assets/textures/Game/player_body.png");
+	textures.load(Textures::Game_PlayerHead, "assets/textures/Game/player_head.png");
 }
 
 void GameState::updateButtons()
@@ -58,16 +54,20 @@ void GameState::updateButtons()
 
 void GameState::handleEvents()
 {
+	while (window->pollEvent(this->event)) {
+
+	}
 }
 
 void GameState::endState()
 {
-	std::cout << "Ending state!\n";
+	
 }
 
 void GameState::update(const float dt)
 {
 	updateMousePositions();
+	handleEvents();
 	updateInput(dt);
 	player.update(dt);
 }

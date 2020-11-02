@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 
 #include "State.h"
+#include "Player.h"
 
 class GameState : public State
 {
@@ -15,7 +16,7 @@ public:
 	void update(const float dt) override;
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
-	Entity player;
+	Player player;
 
 	void initKeybinds() override;
 	void updateInput(const float dt) override;

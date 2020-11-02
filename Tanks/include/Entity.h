@@ -5,8 +5,6 @@
 
 class Entity
 {
-private:
-
 protected:
 	sf::RectangleShape shape;
 	float movementSpeed;
@@ -14,7 +12,7 @@ public:
 	Entity();
 	virtual ~Entity();
 
-	virtual void move(const float dt, const float dx, const float dy);
+	virtual void move(const float dt, float dir = 1.f);
 	virtual void update(const float dt);
 	virtual void render(sf::RenderTarget* target);
 };

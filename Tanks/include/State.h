@@ -4,9 +4,21 @@
 #include "Entity.h"
 #include "Button.h"
 
-enum class Textures;
-enum class Sounds;
-enum class Fonts;
+enum class Textures {
+	MainMenu_Background = 0,
+	
+	Game_PlayerHead,
+	Game_PlayerBody
+};
+
+enum class Sounds {
+
+};
+
+enum class Fonts {
+	Arial = 0
+};
+
 
 class State
 {

@@ -37,8 +37,8 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	buttons["Play"] = std::unique_ptr<Button>(new Button("Play", 100.f, 100.f, &fonts.get(Fonts::Arial)));
-	buttons["Exit"] = std::unique_ptr<Button>(new Button("Exit", 30.f, 500.f, &fonts.get(Fonts::Arial)));
+	buttons["Play"] = std::unique_ptr<Button>(new Button("Play", 30.f, 100.f, &fonts.get(Fonts::Arial)));
+	buttons["Exit"] = std::unique_ptr<Button>(new Button("Exit", 30.f, 300.f, &fonts.get(Fonts::Arial)));
 }
 
 void MainMenuState::updateButtons()
@@ -62,7 +62,7 @@ void MainMenuState::loadAssets()
 
 void MainMenuState::loadTextures()
 {
-	textures.load(Textures::Background, "assets/textures/MainMenu/background.jpg");
+	textures.load(Textures::MainMenu_Background, "assets/textures/MainMenu/background.jpg");
 }
 
 
@@ -77,7 +77,7 @@ void MainMenuState::loadFonts()
 
 void MainMenuState::initSprites()
 {
-	sprites["background"] = createSprite(textures.get(Textures::Background));
+	sprites["background"] = createSprite(textures.get(Textures::MainMenu_Background));
 }
 
 void MainMenuState::pushGameState()
