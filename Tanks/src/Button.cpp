@@ -26,6 +26,7 @@ Button::Button(const std::string& btnText, float x, float y,
 
 Button::~Button()
 {
+	
 }
 
 void Button::update(sf::Event& event, sf::Vector2i mousePos)
@@ -40,9 +41,31 @@ void Button::update(sf::Event& event, sf::Vector2i mousePos)
 		currentState = ButtonState::IDLE;
 	}
 
+	changeColor();
+}
+
+void Button::render(sf::RenderTarget& target)
+{
+	target.draw(border);
+	target.draw(buttonText);
+}
+
+void Button::reset()
+{
+	currentState = ButtonState::IDLE;
+	border.setFillColor(idleColor);
+}
+
+const bool Button::isButtonPressed() const
+{
+	return currentState == ButtonState::ACTIVE;
+}
+
+void Button::changeColor()
+{
 	switch (currentState) {
-		case ButtonState::IDLE:
-			border.setFillColor(idleColor);
+	case ButtonState::IDLE:
+		border.setFillColor(idleColor);
 		break;
 	case ButtonState::HOVER:
 		border.setFillColor(hoverColor);
@@ -54,15 +77,4 @@ void Button::update(sf::Event& event, sf::Vector2i mousePos)
 		border.setFillColor(idleColor);
 		break;
 	}
-}
-
-void Button::render(sf::RenderTarget& target)
-{
-	target.draw(border);
-	target.draw(buttonText);
-}
-
-const bool Button::isButtonPressed() const
-{
-	return currentState == ButtonState::ACTIVE;
 }

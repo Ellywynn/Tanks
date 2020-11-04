@@ -3,13 +3,18 @@
 
 #include "State.h"
 
+enum class TankType {
+	Player = 0,
+	Enemy
+};
+
 class Tank : protected Entity
 {
 public:
 	Tank();
 	virtual ~Tank();
 
-	virtual void update(const float dt);
+	virtual void update(const float dt) = 0;
 	virtual void render(sf::RenderTarget* target);
 	virtual void move(const float dt, float dir) = 0;
 protected:
@@ -23,6 +28,8 @@ protected:
 
 	float hp;
 	float armor;
+
+	TankType type;
 };
 
 #endif

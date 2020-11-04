@@ -10,11 +10,6 @@ Tank::~Tank()
 {
 }
 
-void Tank::update(const float dt)
-{
-
-}
-
 void Tank::render(sf::RenderTarget* target)
 {
 	target->draw(body);

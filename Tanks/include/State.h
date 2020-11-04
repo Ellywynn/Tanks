@@ -43,6 +43,7 @@ protected:
 
 	virtual void initKeybinds() = 0;
 	virtual void initButtons() = 0;
+	virtual void initVariables() = 0;
 	virtual void loadAssets() = 0;
 public:
 	State(sf::RenderWindow* window,

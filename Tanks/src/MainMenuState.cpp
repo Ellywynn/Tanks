@@ -7,6 +7,7 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 	std::stack<State*>* states)
 	: State(window, supportedKeys, states)
 {
+	std::cout << "Main menu State\n";
 	initKeybinds();
 	loadAssets();
 	initSprites();
@@ -15,6 +16,8 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 
 MainMenuState::~MainMenuState()
 {
+	for (auto& i : buttons)
+		delete i.second;
 }
 
 void MainMenuState::initKeybinds()
@@ -37,8 +40,12 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	buttons["Play"] = std::unique_ptr<Button>(new Button("Play", 30.f, 100.f, &fonts.get(Fonts::Arial)));
-	buttons["Exit"] = std::unique_ptr<Button>(new Button("Exit", 30.f, 300.f, &fonts.get(Fonts::Arial)));
+	buttons["Play"] = new Button("Play", 30.f, 100.f, &fonts.get(Fonts::Arial));
+	buttons["Exit"] = new Button("Exit", 30.f, 300.f, &fonts.get(Fonts::Arial));
+}
+
+void MainMenuState::initVariables()
+{
 }
 
 void MainMenuState::updateButtons()
@@ -82,6 +89,7 @@ void MainMenuState::initSprites()
 
 void MainMenuState::pushGameState()
 {
+	buttons["Play"]->reset();
 	states->push(new GameState(window, supportedKeys, states));
 }
 
@@ -98,6 +106,7 @@ void MainMenuState::updateInput(const float dt)
 
 void MainMenuState::quitState()
 {
+	buttons["Exit"]->reset();
 	quit = true;
 }
 

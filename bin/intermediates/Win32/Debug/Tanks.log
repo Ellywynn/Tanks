@@ -1,11 +1,3 @@
 ﻿  Player.cpp
-D:\GitHub\Tanks\Tanks\src\Player.cpp(53,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  MainMenuState.cpp
-  Entity.cpp
-  GameState.cpp
-  Game.cpp
-  Main.cpp
-  State.cpp
-  Tank.cpp
-  Generating Code...
+D:\GitHub\Tanks\Tanks\src\Player.cpp(66,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Tanks.vcxproj -> D:\GitHub\Tanks\bin\Win32\Debug\Tanks.exe

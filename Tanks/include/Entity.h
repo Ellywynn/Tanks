@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include "ResourceHolder.h"
+#include "Hitbox.h"
 
 class Entity
 {

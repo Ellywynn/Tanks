@@ -17,6 +17,9 @@ public:
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
 	Player player;
+	sf::View playerCamera;
+
+	bool showHitboxes;
 
 	void initKeybinds() override;
 	void updateInput(const float dt) override;
@@ -24,6 +27,10 @@ private:
 	void loadAssets() override;
 	void updateButtons() override;
 	void handleEvents() override;
+	void initVariables() override;
+	void renderHitboxes();
+
+	void updateView();
 };
 
 #endif

@@ -2,6 +2,7 @@
 
 Entity::Entity()
 {
+	movementSpeed = 0.f;
 }
 
 Entity::~Entity()

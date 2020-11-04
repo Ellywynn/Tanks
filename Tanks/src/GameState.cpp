@@ -4,10 +4,12 @@ GameState::GameState(sf::RenderWindow* window,
 	std::unordered_map<std::string, int>* supportedKeys,
 	std::stack<State*>* states)
 	: State(window, supportedKeys, states),
-	player(&mousePosWindow, &keybinds)
+	player(&mousePosView, &keybinds)
 {
+	std::cout << "Game State\n";
 	initKeybinds();
 	loadAssets();
+	initVariables();
 	player.loadAssets(&textures);
 }
 
@@ -59,9 +61,27 @@ void GameState::handleEvents()
 	}
 }
 
+void GameState::initVariables()
+{
+	playerCamera.setSize(static_cast<sf::Vector2f>(window->getSize()));
+	window->setView(playerCamera);
+	showHitboxes = true;
+}
+
+void GameState::renderHitboxes()
+{
+	player.renderHitboxes(window);
+}
+
+void GameState::updateView()
+{
+	playerCamera.setCenter(player.getPosition());
+	window->setView(playerCamera);
+}
+
 void GameState::endState()
 {
-	
+	window->setView(window->getDefaultView());
 }
 
 void GameState::update(const float dt)
@@ -70,9 +90,12 @@ void GameState::update(const float dt)
 	handleEvents();
 	updateInput(dt);
 	player.update(dt);
+	updateView();
 }
 
 void GameState::render(sf::RenderTarget* target)
 {
 	player.render(window);
+	if (showHitboxes)
+		renderHitboxes();
 }

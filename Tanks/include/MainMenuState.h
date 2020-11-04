@@ -18,6 +18,7 @@ public:
 private:
 	void initKeybinds() override;
 	void initButtons() override;
+	void initVariables() override;
 	void updateButtons() override;
 	void updateInput(const float dt) override;
 	void quitState() override;
@@ -32,7 +33,7 @@ private:
 
 	sf::Sprite createSprite(sf::Texture& texture);
 private:
-	std::unordered_map<std::string, std::unique_ptr<Button>> buttons;
+	std::unordered_map<std::string, Button*> buttons;
 };
 
 #endif

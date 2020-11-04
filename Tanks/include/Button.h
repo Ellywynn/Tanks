@@ -29,6 +29,7 @@ public:
 	void update(sf::Event& event, sf::Vector2i mousePos);
 	void render(sf::RenderTarget& target);
 
+	void reset();
 	const bool isButtonPressed() const;
 private:
 	sf::Color idleColor;
@@ -36,6 +37,8 @@ private:
 	sf::Color hoverColor;
 
 	ButtonState currentState;
+
+	void changeColor();
 };
 
 #endif
