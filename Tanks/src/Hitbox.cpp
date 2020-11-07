@@ -34,8 +34,7 @@ void Hitbox::setPosition(const sf::Vector2f& position)
 void Hitbox::setSize(float x, float y)
 {
 	hitbox.setSize(sf::Vector2f(x, y));
-	hitbox.setOrigin(hitbox.getSize().x / 2.f,
-		hitbox.getSize().y / 2.f);
+	hitbox.setOrigin(x / 2.f, y / 2.f);
 }
 
 void Hitbox::setColor(sf::Color color)

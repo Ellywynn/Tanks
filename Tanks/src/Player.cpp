@@ -38,6 +38,11 @@ void Player::rotate(const float dt, float dir)
 	float angle = body.getRotation() + rotationSpeed * dir * dt;
 	body.setRotation(angle);
 	hb_body.setRotation(body.getRotation());
+
+	float x = std::cos(body.getRotation() * 3.1415f / 180.f);
+	float y = std::sin(body.getRotation() * 3.1415f / 180.f);
+	sf::Vector2f pos(x * 45.f - y * 14.f, y * 45.f + x * 14.f);
+	hb_body.setPosition(body.getPosition() + pos);
 }
 
 void Player::move(const float dt, float dir)
@@ -53,7 +58,7 @@ void Player::move(const float dt, float dir)
 	hb_head.move(velocity);
 }
 
-void Player::updateInput(const float dt)
+void Player::moveHead()
 {
 	sf::Vector2f playerPos = body.getPosition();
 	sf::Vector2f aimDir = static_cast<sf::Vector2f>(*mousePosition) - playerPos;
@@ -62,6 +67,15 @@ void Player::updateInput(const float dt)
 	head.setRotation(angleDeg - 180.f);
 	hb_head.setRotation(head.getRotation());
 
+	float ang = atan2(aimDir.y, aimDir.x);
+	float x = std::cos(ang);
+	float y = std::sin(ang);
+	sf::Vector2f pos(x * 155.f + y * 15.f, y * 155.f - x * 15.f);
+	hb_head.setPosition(head.getPosition() + pos);
+}
+
+void Player::moveBody(const float dt)
+{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds->at("MOVE_UP"))))
 		move(dt, 1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds->at("MOVE_DOWN"))))
@@ -70,6 +84,12 @@ void Player::updateInput(const float dt)
 		rotate(dt, -1);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keybinds->at("MOVE_RIGHT"))))
 		rotate(dt, 1);
+}
+
+void Player::updateInput(const float dt)
+{
+	moveHead();
+	moveBody(dt);
 }
 
 void Player::loadAssets(ResourceHolder<sf::Texture, Textures>* textures)
@@ -91,8 +111,6 @@ void Player::loadAssets(ResourceHolder<sf::Texture, Textures>* textures)
 		body.getPosition().y + 14.f);
 
 	hb_head.setColor(sf::Color::Yellow);
-	hb_head.setPosition(head.getPosition().x - 60.f,
-		head.getPosition().y + 15.f);
 }
 
 const sf::Vector2f Player::getPosition() const

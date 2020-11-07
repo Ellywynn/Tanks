@@ -23,6 +23,8 @@ public:
 private:
 	void rotate(const float dt, float dir);
 	void move(const float dt, float dir) override;
+	void moveHead();
+	void moveBody(const float dt);
 
 	Hitbox hb_body;
 	Hitbox hb_head;
