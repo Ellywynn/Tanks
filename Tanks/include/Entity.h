@@ -7,7 +7,7 @@
 class Entity
 {
 protected:
-	sf::RectangleShape shape;
+	sf::Sprite* sprite;
 	float movementSpeed;
 public:
 	Entity();
@@ -16,6 +16,8 @@ public:
 	virtual void move(const float dt, float dir = 1.f);
 	virtual void update(const float dt);
 	virtual void render(sf::RenderTarget* target);
+
+	virtual const sf::Vector2f getPosition() const;
 };
 
 #endif

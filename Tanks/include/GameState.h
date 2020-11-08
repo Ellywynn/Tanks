@@ -16,8 +16,10 @@ public:
 	void update(const float dt) override;
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
-	Player player;
+	Player* player;
 	sf::View playerCamera;
+
+	std::vector<Projectile*> projectiles;
 
 	bool showHitboxes;
 
@@ -29,6 +31,8 @@ private:
 	void handleEvents() override;
 	void initVariables() override;
 	void renderHitboxes();
+	void updateProjectiles(const float dt);
+	void renderProjectiles();
 
 	void updateView();
 };

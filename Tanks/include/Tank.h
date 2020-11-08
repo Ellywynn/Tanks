@@ -2,6 +2,7 @@
 #define TANK_H
 
 #include "State.h"
+#include "StandartBullet.h"
 
 enum class TankType {
 	Player = 0,
@@ -11,25 +12,35 @@ enum class TankType {
 class Tank : protected Entity
 {
 public:
-	Tank();
+	Tank(ResourceHolder<sf::Texture, Textures>* textures,
+		std::vector<Projectile*>* projectiles);
 	virtual ~Tank();
 
-	virtual void update(const float dt) = 0;
 	virtual void render(sf::RenderTarget* target);
-	virtual void move(const float dt, float dir) = 0;
-protected:
+	virtual void shoot(const sf::Vector2f& velocity) = 0;
+
+	void restartClock();
+
+	ResourceHolder<sf::Texture, Textures>* textures;
+	std::vector<Projectile*>* projectiles;
+
 	sf::Sprite head;
 	sf::Sprite body;
+	Hitbox hb_body;
+	Hitbox hb_head;
 
 	float rotationSpeed;
-
-	sf::Clock attackClock;
-	sf::Time attackSpeed;
-
 	float hp;
 	float armor;
+	float damage;
+	sf::Time attackSpeed;
 
 	TankType type;
+
+	float getSpeed() const;
+	bool canShoot() const;
+protected:
+	sf::Clock attackClock;
 };
 
 #endif

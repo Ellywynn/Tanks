@@ -1,33 +1,36 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Tank.h"
-
-class Player : public Tank
+#include "PlayerTier1Tank.h"
+		
+class Player
 {
 public:
 	Player(sf::Vector2f* mousePosition,
-		std::unordered_map<std::string, int>* keybinds);
+		std::unordered_map<std::string, int>* keybinds,
+		ResourceHolder<sf::Texture, Textures>* textures,
+		std::vector<Projectile*>* projectiles);
 	~Player();
 
 	sf::Vector2f* mousePosition;
 	std::unordered_map<std::string, int>* keybinds;
+	ResourceHolder<sf::Texture, Textures>* textures;
+	std::vector<Projectile*>* projectiles;
 
-	void update(const float dt) override;
-	void render(sf::RenderTarget* target) override;
+	void update(const float dt);
+	void render(sf::RenderTarget* target);
 	void renderHitboxes(sf::RenderTarget* target);
 	void updateInput(const float dt);
-	void loadAssets(ResourceHolder<sf::Texture, Textures>* textures);
 
 	const sf::Vector2f getPosition() const;
 private:
-	void rotate(const float dt, float dir);
-	void move(const float dt, float dir) override;
+	void rotateBody(const float dt, float dir);
+	void move(const float dt, float dir);
 	void moveHead();
 	void moveBody(const float dt);
+	void shoot();
 
-	Hitbox hb_body;
-	Hitbox hb_head;
+	Tank* tank;
 };
 
 #endif

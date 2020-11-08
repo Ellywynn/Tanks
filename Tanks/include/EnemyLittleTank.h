@@ -1,12 +1,13 @@
 #ifndef ENEMYLITTLETANK_H
 #define ENEMYLITTLETANK_H
 
-#include "Enemy.h"
+#include "EnemyTank.h"
 
-class EnemyLittleTank : Enemy
+class EnemyLittleTank : EnemyTank
 {
 public:
-	EnemyLittleTank();
+	EnemyLittleTank(ResourceHolder<sf::Texture, Textures>* textures,
+		std::vector<Projectile*>* projectiles);
 	~EnemyLittleTank();
 };
 

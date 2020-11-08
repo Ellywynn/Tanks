@@ -3,18 +3,20 @@
 GameState::GameState(sf::RenderWindow* window,
 	std::unordered_map<std::string, int>* supportedKeys,
 	std::stack<State*>* states)
-	: State(window, supportedKeys, states),
-	player(&mousePosView, &keybinds)
+	: State(window, supportedKeys, states)
 {
 	std::cout << "Game State\n";
 	initKeybinds();
 	loadAssets();
 	initVariables();
-	player.loadAssets(&textures);
+	player = new Player(&mousePosView, &keybinds, &textures, &projectiles);
 }
 
 GameState::~GameState()
 {
+	for (auto& p : projectiles)
+		delete p;
+	delete player;
 }
 
 void GameState::initKeybinds()
@@ -46,8 +48,10 @@ void GameState::initButtons()
 
 void GameState::loadAssets()
 {
-	textures.load(Textures::Game_PlayerBody, "assets/textures/Game/player_body.png");
-	textures.load(Textures::Game_PlayerHead, "assets/textures/Game/player_head.png");
+	std::string path = "assets/textures/Game/";
+	textures.load(Textures::Game_PlayerBody, path + "player_body.png");
+	textures.load(Textures::Game_PlayerHead, path + "player_head.png");
+	textures.load(Textures::Game_StandartBullet, path + "standart_bullet.png");
 }
 
 void GameState::updateButtons()
@@ -64,18 +68,33 @@ void GameState::handleEvents()
 void GameState::initVariables()
 {
 	playerCamera.setSize(static_cast<sf::Vector2f>(window->getSize()));
+	playerCamera.zoom(3.f);
 	window->setView(playerCamera);
 	showHitboxes = true;
 }
 
 void GameState::renderHitboxes()
 {
-	player.renderHitboxes(window);
+	player->renderHitboxes(window);
+	for (auto& p : projectiles)
+		window->draw(p->hitbox.get());
+}
+
+void GameState::updateProjectiles(const float dt)
+{
+	for (auto& p : projectiles)
+		p->update(dt);
+}
+
+void GameState::renderProjectiles()
+{
+	for (auto& p : projectiles)
+		p->render(*window);
 }
 
 void GameState::updateView()
 {
-	playerCamera.setCenter(player.getPosition());
+	playerCamera.setCenter(player->getPosition());
 	window->setView(playerCamera);
 }
 
@@ -89,13 +108,15 @@ void GameState::update(const float dt)
 	updateMousePositions();
 	handleEvents();
 	updateInput(dt);
-	player.update(dt);
+	player->update(dt);
 	updateView();
+	updateProjectiles(dt);
 }
 
 void GameState::render(sf::RenderTarget* target)
 {
-	player.render(window);
+	player->render(window);
+	renderProjectiles();
 	if (showHitboxes)
 		renderHitboxes();
 }

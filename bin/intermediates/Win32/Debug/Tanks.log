@@ -1,3 +1,2 @@
-﻿  Player.cpp
-D:\GitHub\Tanks\Tanks\src\Player.cpp(67,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  StandartBullet.cpp
   Tanks.vcxproj -> D:\GitHub\Tanks\bin\Win32\Debug\Tanks.exe

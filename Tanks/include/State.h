@@ -8,7 +8,9 @@ enum class Textures {
 	MainMenu_Background = 0,
 	
 	Game_PlayerHead,
-	Game_PlayerBody
+	Game_PlayerBody,
+
+	Game_StandartBullet
 };
 
 enum class Sounds {

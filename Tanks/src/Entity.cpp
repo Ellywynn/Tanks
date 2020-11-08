@@ -2,6 +2,7 @@
 
 Entity::Entity()
 {
+	sprite = nullptr;
 	movementSpeed = 0.f;
 }
 
@@ -21,5 +22,11 @@ void Entity::update(const float dt)
 
 void Entity::render(sf::RenderTarget* target)
 {
-	target->draw(shape);
+	if(sprite != nullptr)
+		target->draw(*sprite);
+}
+
+const sf::Vector2f Entity::getPosition() const
+{
+	return sprite->getPosition();
 }
