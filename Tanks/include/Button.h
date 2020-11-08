@@ -9,7 +9,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
-enum class ButtonState {
+enum class ButtonState 
+{
 	IDLE = 0,
 	HOVER,
 	ACTIVE
@@ -18,20 +19,24 @@ enum class ButtonState {
 class Button
 {
 public:
+	// Constructor
 	Button(const std::string& btnText, float x, float y, 
 		sf::Font* buttonFont, float w = 100.f, float h = 50.f);
+
+	// Destructor
 	~Button();
 
+	// Variables
 	sf::RectangleShape border;
 	sf::Text buttonText;
 	sf::Font* font;
-public:
+public: // Functions
 	void update(sf::Event& event, sf::Vector2i mousePos);
 	void render(sf::RenderTarget& target);
 
 	void reset();
 	const bool isButtonPressed() const;
-private:
+private: // Variables
 	sf::Color idleColor;
 	sf::Color activeColor;
 	sf::Color hoverColor;

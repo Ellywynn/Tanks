@@ -6,10 +6,16 @@
 class Hitbox
 {
 public:
+	// Constructors
 	Hitbox();
 	Hitbox(float width, float height);
 	Hitbox(float width, float height, float x, float y);
+	~Hitbox();
 
+	void move(float x, float y);
+	void move(const sf::Vector2f& velocity);
+	
+	// Setters
 	void setPosition(float x, float y);
 	void setPosition(const sf::Vector2f& position);
 	void setSize(float x, float y);
@@ -17,9 +23,8 @@ public:
 	void setRotation(float angle);
 	void setThickness(float thickness);
 
-	void move(float x, float y);
-	void move(const sf::Vector2f& velocity);
 
+	// Getters
 	const sf::RectangleShape get() const;
 	const sf::Vector2f getPosition() const;
 	const sf::FloatRect getGlobalBounds() const;

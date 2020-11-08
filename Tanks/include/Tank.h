@@ -4,7 +4,9 @@
 #include "State.h"
 #include "StandartBullet.h"
 
-enum class TankType {
+
+enum class TankType 
+{
 	Player = 0,
 	Enemy
 };
@@ -19,16 +21,16 @@ public:
 	virtual void render(sf::RenderTarget* target);
 	virtual void shoot(const sf::Vector2f& velocity) = 0;
 
-	void restartClock();
-
 	ResourceHolder<sf::Texture, Textures>* textures;
 	std::vector<Projectile*>* projectiles;
 
+	// Tank objects
 	sf::Sprite head;
 	sf::Sprite body;
 	Hitbox hb_body;
 	Hitbox hb_head;
 
+	// Stats
 	float rotationSpeed;
 	float hp;
 	float armor;
@@ -37,6 +39,7 @@ public:
 
 	TankType type;
 
+	void restartClock();
 	float getSpeed() const;
 	bool canShoot() const;
 protected:

@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 
+// For collision cheching
 enum class ProjectileType
 {
 	Player = 0,
@@ -21,7 +22,7 @@ public:
 	ProjectileType type;
 	float damage;
 	Hitbox hitbox;
-	sf::Vector2f direction;
+	sf::Vector2f direction; // Flying direction
 };
 
 #endif

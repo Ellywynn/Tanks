@@ -4,7 +4,8 @@
 #include "Entity.h"
 #include "Button.h"
 
-enum class Textures {
+enum class Textures 
+{
 	MainMenu_Background = 0,
 	
 	Game_PlayerHead,
@@ -13,11 +14,13 @@ enum class Textures {
 	Game_StandartBullet
 };
 
-enum class Sounds {
+enum class Sounds 
+{
 
 };
 
-enum class Fonts {
+enum class Fonts
+{
 	Arial = 0
 };
 
@@ -25,24 +28,31 @@ enum class Fonts {
 class State
 {
 protected:
+	// We need a pointer to the states stack to switch state
 	std::stack<State*>* states;
+	// This pointer is needede to render the state stuff
 	sf::RenderWindow* window;
+	// Keys
 	std::unordered_map<std::string, int>* supportedKeys;
 	std::unordered_map<std::string, int> keybinds;
+	// Needed to quit the state
 	bool quit;
 
 	sf::Event event;
 
+	// Mouse positions
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
+	// Resources
 	ResourceHolder<sf::Texture, Textures> textures;
 	ResourceHolder<sf::Sound, Sounds> sound;
 	ResourceHolder<sf::Font, Fonts> fonts;
 
 	std::unordered_map<std::string, sf::Sprite> sprites;
 
+	// Init functions
 	virtual void initKeybinds() = 0;
 	virtual void initButtons() = 0;
 	virtual void initVariables() = 0;
@@ -53,17 +63,19 @@ public:
 		std::stack<State*>* states);
 	virtual ~State();
 
-	const bool getQuit() const;
-
-	virtual void quitState();
-
+	// Update functions
 	virtual void updateMousePositions();
-	virtual void endState() = 0;
 	virtual void updateButtons() = 0;
 	virtual void handleEvents() = 0;
 	virtual void updateInput(const float dt) = 0;
 	virtual void update(const float dt) = 0;
+
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;
+
+	// Ending the state
+	virtual void quitState();
+	virtual void endState() = 0;
+	const bool getQuit() const;
 };
 
 #endif

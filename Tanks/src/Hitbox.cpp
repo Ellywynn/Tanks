@@ -21,6 +21,10 @@ Hitbox::Hitbox(float width, float height, float x, float y)
 	hitbox.setPosition(x, y);
 }
 
+Hitbox::~Hitbox()
+{
+}
+
 void Hitbox::setPosition(float x, float y)
 {
 	hitbox.setPosition(x, y);

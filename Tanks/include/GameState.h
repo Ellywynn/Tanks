@@ -21,20 +21,24 @@ private:
 
 	std::vector<Projectile*> projectiles;
 
-	bool showHitboxes;
+	bool showHitboxes;		// For debug				
 
-	void initKeybinds() override;
+	// Update functions
 	void updateInput(const float dt) override;
-	void initButtons() override;
-	void loadAssets() override;
 	void updateButtons() override;
-	void handleEvents() override;
-	void initVariables() override;
-	void renderHitboxes();
 	void updateProjectiles(const float dt);
-	void renderProjectiles();
-
 	void updateView();
+	void handleEvents() override;
+	
+	// Render functions
+	void renderHitboxes();
+	void renderProjectiles();
+	
+	// Init functions
+	void initKeybinds() override;
+	void initButtons() override;
+	void initVariables() override;
+	void loadAssets() override;
 };
 
 #endif

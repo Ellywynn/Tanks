@@ -7,12 +7,13 @@
 class Entity
 {
 protected:
-	sf::Sprite* sprite;
-	float movementSpeed;
+	sf::Sprite* sprite;				// Entity sprite
+	float movementSpeed;			
 public:
 	Entity();
 	virtual ~Entity();
 
+	// Functions
 	virtual void move(const float dt, float dir = 1.f);
 	virtual void update(const float dt);
 	virtual void render(sf::RenderTarget* target);

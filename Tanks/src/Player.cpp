@@ -56,12 +56,13 @@ void Player::move(const float dt, float dir)
 {
 	// 1. Get the angle rotation in rads
 	// 2. Get the direction vector(cosx,sinx)
-	// 3. Get the proper velocity and set it to the player objects
+	// 3. Get the proper velocity
 	sf::Vector2f playerPos = tank->body.getPosition();
 	float angleRad = (tank->body.getRotation() + 180.f) * 3.1415f / 180.f;
 	sf::Vector2f directionVector(std::cos(angleRad), std::sin(angleRad));
 	sf::Vector2f velocity(directionVector * tank->getSpeed() * dt * dir);
 
+	// 4. Set it to the player objects
 	tank->head.move(velocity);
 	tank->body.move(velocity);
 	tank->hb_body.move(velocity);

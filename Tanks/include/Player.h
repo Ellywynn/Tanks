@@ -12,25 +12,27 @@ public:
 		std::vector<Projectile*>* projectiles);
 	~Player();
 
-	sf::Vector2f* mousePosition;
-	std::unordered_map<std::string, int>* keybinds;
+	sf::Vector2f* mousePosition;						// Cursor position for tank head		
+	std::unordered_map<std::string, int>* keybinds;		// Controls
 	ResourceHolder<sf::Texture, Textures>* textures;
 	std::vector<Projectile*>* projectiles;
 
 	void update(const float dt);
+	void updateInput(const float dt);
+
 	void render(sf::RenderTarget* target);
 	void renderHitboxes(sf::RenderTarget* target);
-	void updateInput(const float dt);
 
 	const sf::Vector2f getPosition() const;
 private:
-	void rotateBody(const float dt, float dir);
 	void move(const float dt, float dir);
 	void moveHead();
 	void moveBody(const float dt);
+	
+	void rotateBody(const float dt, float dir);
 	void shoot();
 
-	Tank* tank;
+	Tank* tank;											// Player current tank
 };
 
 #endif
