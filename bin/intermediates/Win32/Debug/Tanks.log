@@ -1,2 +1,17 @@
-﻿  StandartBullet.cpp
+﻿  EnemyTank.cpp
+  Entity.cpp
+  Player.cpp
+D:\GitHub\Tanks\Tanks\Entities\Player\Player.cpp(80,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  PlayerTier1Tank.cpp
+  Tank.cpp
+  Game.cpp
+  Main.cpp
+  Projectile.cpp
+  StandartBullet.cpp
+  GameState.cpp
+D:\GitHub\Tanks\Tanks\States\GameState.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
+  MainMenuState.cpp
+  State.cpp
+  Hitbox.cpp
+  Generating Code...
   Tanks.vcxproj -> D:\GitHub\Tanks\bin\Win32\Debug\Tanks.exe

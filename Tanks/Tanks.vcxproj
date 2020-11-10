@@ -159,37 +159,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\PlayerTier1Tank.cpp" />
-    <ClCompile Include="src\EnemyTank.cpp" />
-    <ClCompile Include="src\Hitbox.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Button.cpp" />
-    <ClCompile Include="src\MainMenuState.cpp" />
-    <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\GameState.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Projectile.cpp" />
-    <ClCompile Include="src\StandartBullet.cpp" />
-    <ClCompile Include="src\State.cpp" />
-    <ClCompile Include="src\Tank.cpp" />
+    <ClCompile Include="Entities\Player\PlayerTier1Tank.cpp" />
+    <ClCompile Include="Entities\Enemies\EnemyTank.cpp" />
+    <ClCompile Include="Main\Game.cpp" />
+    <ClCompile Include="Main\Main.cpp" />
+    <ClCompile Include="Projectiles\Projectile.cpp" />
+    <ClCompile Include="Projectiles\StandartBullet.cpp" />
+    <ClCompile Include="Entities\Player\Player.cpp" />
+    <ClCompile Include="GUI\Button.cpp" />
+    <ClCompile Include="States\MainMenuState.cpp" />
+    <ClCompile Include="Entities\Entity.cpp" />
+    <ClCompile Include="States\GameState.cpp" />
+    <ClCompile Include="States\State.cpp" />
+    <ClCompile Include="Entities\Tank.cpp" />
+    <ClCompile Include="Utils\Hitbox.cpp" />
+    <ClCompile Include="Utils\SAT.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Button.h" />
-    <ClInclude Include="include\EnemyTank.h" />
-    <ClInclude Include="include\EnemyLittleTank.h" />
-    <ClInclude Include="include\Entity.h" />
-    <ClInclude Include="include\GameState.h" />
+    <ClInclude Include="GUI\Button.h" />
+    <ClInclude Include="Entities\Enemies\EnemyTank.h" />
+    <ClInclude Include="Entities\Enemies\EnemyLittleTank.h" />
+    <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Main\Game.h" />
+    <ClInclude Include="Projectiles\Projectile.h" />
+    <ClInclude Include="Projectiles\StandartBullet.h" />
+    <ClInclude Include="States\GameState.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Hitbox.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\PlayerTier1Tank.h" />
+    <ClInclude Include="Entities\Player\Player.h" />
+    <ClInclude Include="Entities\Player\PlayerTier1Tank.h" />
     <ClInclude Include="include\ResourceHolder.h" />
     <ClInclude Include="include\StandartBullet.h" />
-    <ClInclude Include="include\State.h" />
-    <ClInclude Include="include\MainMenuState.h" />
-    <ClInclude Include="include\Tank.h" />
+    <ClInclude Include="States\State.h" />
+    <ClInclude Include="States\MainMenuState.h" />
+    <ClInclude Include="Entities\Tank.h" />
     <ClInclude Include="include\Projectile.h" />
+    <ClInclude Include="Utils\Hitbox.h" />
+    <ClInclude Include="Utils\ResourceHolder.h" />
+    <ClInclude Include="Utils\SAT.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
