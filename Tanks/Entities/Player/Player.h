@@ -24,6 +24,7 @@ public:
 	void renderHitboxes(sf::RenderTarget* target);
 
 	const sf::Vector2f getPosition() const;
+	const Tank* getTank() const;
 private:
 	void move(const float dt, float dir);
 	void moveHead();

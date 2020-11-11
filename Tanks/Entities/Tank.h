@@ -31,10 +31,10 @@ public:
 	Hitbox hb_head;
 
 	// Stats
-	float rotationSpeed;
 	float hp;
 	float armor;
 	float damage;
+	float rotationSpeed;
 	sf::Time attackSpeed;
 
 	TankType type;

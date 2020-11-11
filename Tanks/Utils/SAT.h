@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAT_H
+#define SAT_H
 
 #include <SFML/Graphics.hpp>
 
@@ -16,3 +17,4 @@ float GetMagnitude(const sf::Vector2f& vector);
 void GetNormals(const sf::RectangleShape& box, sf::Vector2f normals[]);
 void Normalize(sf::Vector2f& vec);
 
+#endif

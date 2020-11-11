@@ -130,3 +130,8 @@ const sf::Vector2f Player::getPosition() const
 {
 	return tank->body.getPosition();
 }
+
+const Tank* Player::getTank() const
+{
+	return tank;
+}

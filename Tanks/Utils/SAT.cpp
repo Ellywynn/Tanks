@@ -46,7 +46,7 @@ void Normalize(sf::Vector2f& vec)
 
 bool CheckSATDetection(const sf::RectangleShape& boxA, const sf::RectangleShape& boxB)
 {
-	//Step 1: Get the normals of both boxes!
+	//Step 1: Get the normals of both boxes
 	sf::Vector2f boxANormals[4];
 	GetNormals(boxA, boxANormals);
 

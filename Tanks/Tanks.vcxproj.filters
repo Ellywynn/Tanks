@@ -60,6 +60,9 @@
     <ClCompile Include="Utils\SAT.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Entities\Enemies\EnemyLittleTank.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Button.h">

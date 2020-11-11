@@ -3,12 +3,20 @@
 
 #include "../Tank.h"
 
-class EnemyTank : Tank 
+
+class EnemyTank : public Tank 
 {
 public:
 	EnemyTank(ResourceHolder<sf::Texture, Textures>* textures,
-		std::vector<Projectile*>* projectiles);
+		std::vector<Projectile*>* projectiles, Tank* player);
 	virtual ~EnemyTank();
+
+	virtual void update(const float dt) = 0;
+
+	Tank* player;
+	bool rotateLeft;
+	bool shooting;
+	bool rotating;
 };
 
 #endif

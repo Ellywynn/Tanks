@@ -22,7 +22,7 @@ StandartBullet::StandartBullet(ProjectileType type, const sf::Texture& texture,
 	hitbox.setPosition(sprite->getPosition() + pos);
 
 	this->direction = direction;
-	movementSpeed = 100.f;
+	movementSpeed = 4500.f;
 }
 
 StandartBullet::~StandartBullet()

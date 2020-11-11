@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Enemies\EnemyLittleTank.cpp" />
     <ClCompile Include="Entities\Player\PlayerTier1Tank.cpp" />
     <ClCompile Include="Entities\Enemies\EnemyTank.cpp" />
     <ClCompile Include="Main\Game.cpp" />
