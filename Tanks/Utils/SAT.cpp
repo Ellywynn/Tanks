@@ -44,6 +44,16 @@ void Normalize(sf::Vector2f& vec)
 	vec.y *= magnitude;
 }
 
+sf::Vector2f GetDirection(const sf::Vector2f& from, const sf::Vector2f& to)
+{
+	sf::Vector2f aimDir = to - from;
+	float vector_lenght = sqrtf(pow(aimDir.x, 2) + pow(aimDir.y, 2));
+	sf::Vector2f velocity(aimDir.x / vector_lenght,
+		aimDir.y / vector_lenght);
+
+	return velocity;
+}
+
 bool CheckSATDetection(const sf::RectangleShape& boxA, const sf::RectangleShape& boxB)
 {
 	//Step 1: Get the normals of both boxes

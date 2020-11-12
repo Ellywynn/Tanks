@@ -1,0 +1,25 @@
+﻿  EnemyLittleTank.cpp
+  PlayerTier1Tank.cpp
+  EnemyTank.cpp
+  Game.cpp
+  Main.cpp
+E:\dev\C++\Tanks\Tanks\Tanks\Main\Main.cpp(4,22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Projectile.cpp
+  StandartBullet.cpp
+  Player.cpp
+E:\dev\C++\Tanks\Tanks\Tanks\Entities\Player\Player.cpp(79,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Button.cpp
+  MainMenuState.cpp
+  Entity.cpp
+  GameState.cpp
+E:\dev\C++\Tanks\Tanks\Tanks\States\GameState.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
+  State.cpp
+  Tank.cpp
+  Hitbox.cpp
+  SAT.cpp
+E:\dev\C++\Tanks\Tanks\Tanks\Utils\SAT.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1336 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Tanks.vcxproj -> E:\dev\C++\Tanks\Tanks\bin\Win32\Release\Tanks.exe

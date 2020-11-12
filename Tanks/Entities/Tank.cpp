@@ -29,5 +29,5 @@ float Tank::getSpeed() const
 
 bool Tank::canShoot() const
 {
-	return attackClock.getElapsedTime().asSeconds() > attackSpeed.asSeconds();
+	return attackClock.getElapsedTime() >= attackSpeed;
 }

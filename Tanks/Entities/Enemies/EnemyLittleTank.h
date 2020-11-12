@@ -7,11 +7,15 @@ class EnemyLittleTank : public EnemyTank
 {
 public:
 	EnemyLittleTank(ResourceHolder<sf::Texture, Textures>* textures,
-		std::vector<Projectile*>* projectiles, Tank* player);
+		std::vector<Projectile*>* projectiles, Player* player);
 	~EnemyLittleTank();
 
 	void update(const float dt) override;
 	void shoot(const sf::Vector2f& velocity) override;
+	void rotateBody(const float dt) override;
+	void rotateHead(const float dt) override;
+	
+	void move(const float dt) override;
 };
 
 #endif

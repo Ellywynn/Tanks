@@ -58,7 +58,6 @@ void Player::move(const float dt, float dir)
 	// 1. Get the angle rotation in rads
 	// 2. Get the direction vector(cosx,sinx)
 	// 3. Get the proper velocity
-	sf::Vector2f playerPos = tank->body.getPosition();
 	float angleRad = (tank->body.getRotation() + 180.f) * 3.1415f / 180.f;
 	sf::Vector2f directionVector(std::cos(angleRad), std::sin(angleRad));
 	sf::Vector2f velocity(directionVector * tank->getSpeed() * dt * dir);
@@ -76,7 +75,7 @@ void Player::moveHead()
 	sf::Vector2f playerPos = tank->body.getPosition();
 	sf::Vector2f aimDir = static_cast<sf::Vector2f>(*mousePosition) - playerPos;
 
-	// Get angle rotationg in rads and set it
+	// Get angle rotationg in degrees and set it
 	float angleDeg = 180.f / 3.1415 * atan2(aimDir.y, aimDir.x);
 	tank->head.setRotation(angleDeg - 180.f);
 	tank->hb_head.setRotation(tank->head.getRotation());
@@ -108,13 +107,7 @@ void Player::shoot()
 	{
 		if (tank->canShoot())
 		{
-			sf::Vector2f playerPos = tank->body.getPosition();
-			sf::Vector2f aimDir = static_cast<sf::Vector2f>(*mousePosition) - playerPos;
-			float vector_lenght = sqrtf(pow(aimDir.x, 2) + pow(aimDir.y, 2));
-			sf::Vector2f velocity(aimDir.x / vector_lenght,
-				aimDir.y / vector_lenght);
-
-			tank->shoot(velocity);
+			tank->shoot(GetDirection(tank->body.getPosition(), *mousePosition));
 		}
 	}
 }

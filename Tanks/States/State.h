@@ -10,6 +10,8 @@ enum class Textures
 	
 	Game_PlayerHead,
 	Game_PlayerBody,
+	Game_EnemyLT_Head,
+	Game_EnemyLT_Body,
 
 	Game_StandartBullet
 };

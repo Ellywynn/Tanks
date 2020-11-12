@@ -11,7 +11,7 @@ enum class TankType
 	Enemy
 };
 
-class Tank : protected Entity
+class Tank : public Entity
 {
 public:
 	Tank(ResourceHolder<sf::Texture, Textures>* textures,

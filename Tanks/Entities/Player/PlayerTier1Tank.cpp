@@ -7,7 +7,7 @@ PlayerTier1Tank::PlayerTier1Tank(ResourceHolder<sf::Texture, Textures>* textures
 	type = TankType::Player;
 	attackSpeed = sf::seconds(1.f);
 	rotationSpeed = 90.f;
-	movementSpeed = 100.f;
+	movementSpeed = 400.f;
 
 	// Get and set textures
 	head.setTexture(textures->get(Textures::Game_PlayerHead));

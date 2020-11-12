@@ -3,6 +3,7 @@
 
 #include "../States/State.h"
 #include "../Entities/Player/Player.h"
+#include "../Entities/Enemies/EnemyLittleTank.h"
 
 class GameState : public State
 {
@@ -17,6 +18,8 @@ public:
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
 	Player* player;
+	std::vector<EnemyTank*> enemies;
+
 	sf::View playerCamera;
 	Hitbox target;
 

@@ -10,6 +10,7 @@ GameState::GameState(sf::RenderWindow* window,
 	loadAssets();
 	initVariables();
 	player = new Player(&mousePosView, &keybinds, &textures, &projectiles);
+	enemies.push_back(new EnemyLittleTank(&textures, &projectiles, player));
 }
 
 GameState::~GameState()
@@ -17,6 +18,9 @@ GameState::~GameState()
 	for (auto& p : projectiles)
 		delete p;
 	delete player;
+
+	for (auto& e : enemies)
+		delete e;
 }
 
 void GameState::initKeybinds()
@@ -52,6 +56,8 @@ void GameState::loadAssets()
 	textures.load(Textures::Game_PlayerBody, path + "player_body.png");
 	textures.load(Textures::Game_PlayerHead, path + "player_head.png");
 	textures.load(Textures::Game_StandartBullet, path + "standart_bullet.png");
+	//textures.load(Textures::Game_EnemyLT_Head, path + "enemy_lt_head.png");
+	//textures.load(Textures::Game_EnemyLT_Body, path + "enemy_lt_body.png");
 }
 
 void GameState::updateButtons()
@@ -127,6 +133,8 @@ void GameState::update(const float dt)
 	handleEvents();
 	updateInput(dt);
 	player->update(dt);
+	for (auto& e : enemies)
+		e->update(dt);
 	updateView();
 	updateProjectiles(dt);
 	checkCollisions();
@@ -136,6 +144,8 @@ void GameState::render(sf::RenderTarget* target)
 {
 	player->render(window);
 	renderProjectiles();
+	for (auto& e : enemies)
+		e->render(window);
 	window->draw(this->target.get());
 	if (showHitboxes)
 		renderHitboxes();

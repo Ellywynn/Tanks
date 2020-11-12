@@ -1,15 +1,2 @@
 ﻿  EnemyLittleTank.cpp
-  PlayerTier1Tank.cpp
-  EnemyTank.cpp
-  Game.cpp
-  Main.cpp
-  Player.cpp
-D:\GitHub\Tanks\Tanks\Entities\Player\Player.cpp(80,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  MainMenuState.cpp
-  GameState.cpp
-D:\GitHub\Tanks\Tanks\States\GameState.cpp(70,20): warning C4018: '<': signed/unsigned mismatch
-  Tank.cpp
-  SAT.cpp
-D:\GitHub\Tanks\Tanks\Utils\SAT.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Tanks.vcxproj -> D:\GitHub\Tanks\bin\Win32\Debug\Tanks.exe
+  Tanks.vcxproj -> E:\dev\C++\Tanks\Tanks\bin\Win32\Debug\Tanks.exe

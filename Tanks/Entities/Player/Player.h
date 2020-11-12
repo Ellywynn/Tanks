@@ -3,7 +3,7 @@
 
 #include "PlayerTier1Tank.h"
 		
-class Player
+class Player : public Entity
 {
 public:
 	Player(sf::Vector2f* mousePosition,
@@ -23,7 +23,7 @@ public:
 	void render(sf::RenderTarget* target);
 	void renderHitboxes(sf::RenderTarget* target);
 
-	const sf::Vector2f getPosition() const;
+	const sf::Vector2f getPosition() const override;
 	const Tank* getTank() const;
 private:
 	void move(const float dt, float dir);
