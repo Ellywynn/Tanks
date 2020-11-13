@@ -11,12 +11,16 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 	loadAssets();
 	initSprites();
 	initButtons();
+
+	slider = new Slider(100.f, 30.f, 600.f, 500.f, 8.f, 0.f, 1.f, 5.f, &mousePosWindow);
 }
 
 MainMenuState::~MainMenuState()
 {
 	for (auto& i : buttons)
 		delete i.second;
+
+	delete slider;
 }
 
 void MainMenuState::initKeybinds()
@@ -124,6 +128,7 @@ void MainMenuState::handleEvents()
 void MainMenuState::update(const float dt)
 {
 	updateInput(dt);
+	slider->update(dt);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
@@ -132,4 +137,6 @@ void MainMenuState::render(sf::RenderTarget* target)
 		window->draw(i.second);
 	for (auto& i : buttons)
 		i.second->render(*window);
+
+	slider->render(window);
 }

@@ -10,7 +10,7 @@ GameState::GameState(sf::RenderWindow* window,
 	loadAssets();
 	initVariables();
 	player = new Player(&mousePosView, &keybinds, &textures, &projectiles);
-	enemies.push_back(new EnemyLittleTank(&textures, &projectiles, player));
+	//enemies.push_back(new EnemyLittleTank(&textures, &projectiles, player));
 }
 
 GameState::~GameState()

@@ -16,6 +16,8 @@ public:
 	void update(const float dt) override;
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
+	Slider* slider;
+
 	// Update functions
 	void updateButtons() override;
 	void updateInput(const float dt) override;

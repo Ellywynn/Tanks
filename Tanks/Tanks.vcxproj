@@ -168,6 +168,7 @@
     <ClCompile Include="Projectiles\StandartBullet.cpp" />
     <ClCompile Include="Entities\Player\Player.cpp" />
     <ClCompile Include="GUI\Button.cpp" />
+    <ClCompile Include="GUI\Slider.cpp" />
     <ClCompile Include="States\MainMenuState.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="States\GameState.cpp" />
@@ -181,9 +182,11 @@
     <ClInclude Include="Entities\Enemies\EnemyTank.h" />
     <ClInclude Include="Entities\Enemies\EnemyLittleTank.h" />
     <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="Main\Game.h" />
     <ClInclude Include="Projectiles\Projectile.h" />
     <ClInclude Include="Projectiles\StandartBullet.h" />
+    <ClInclude Include="GUI\Slider.h" />
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Hitbox.h" />

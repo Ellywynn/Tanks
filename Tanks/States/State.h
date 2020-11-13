@@ -2,7 +2,7 @@
 #define STATE_H
 
 #include "../Entities/Entity.h"
-#include "../GUI/Button.h"
+#include "../GUI/GUI.h"
 
 enum class Textures 
 {
