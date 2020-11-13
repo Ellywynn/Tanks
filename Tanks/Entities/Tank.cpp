@@ -17,6 +17,11 @@ void Tank::render(sf::RenderTarget* target)
 	target->draw(head);
 }
 
+void Tank::takeDamage(float dmg)
+{
+	hp-=(1.f - armor) * dmg;
+}
+
 void Tank::restartClock()
 {
 	attackClock.restart();
@@ -30,4 +35,9 @@ float Tank::getSpeed() const
 bool Tank::canShoot() const
 {
 	return attackClock.getElapsedTime() >= attackSpeed;
+}
+
+bool Tank::isAlive() const
+{
+	return hp <= 0.f;
 }

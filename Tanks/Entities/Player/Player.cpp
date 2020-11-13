@@ -128,3 +128,8 @@ const Tank* Player::getTank() const
 {
 	return tank;
 }
+
+sf::FloatRect Player::getGlobalBounds() const
+{
+	return tank->hb_body.getGlobalBounds();
+}

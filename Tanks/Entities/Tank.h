@@ -39,9 +39,12 @@ public:
 
 	TankType type;
 
+	void takeDamage(float dmg);
+
 	void restartClock();
 	float getSpeed() const;
 	bool canShoot() const;
+	bool isAlive() const;
 protected:
 	sf::Clock attackClock;
 };

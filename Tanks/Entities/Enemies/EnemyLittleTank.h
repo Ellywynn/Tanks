@@ -11,6 +11,8 @@ public:
 	~EnemyLittleTank();
 
 	void update(const float dt) override;
+	void render(sf::RenderTarget* target) override;
+
 	void shoot(const sf::Vector2f& velocity) override;
 	void rotateBody(const float dt) override;
 	void rotateHead(const float dt) override;

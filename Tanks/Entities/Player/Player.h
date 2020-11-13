@@ -25,6 +25,7 @@ public:
 
 	const sf::Vector2f getPosition() const override;
 	const Tank* getTank() const;
+	sf::FloatRect getGlobalBounds() const;
 private:
 	void move(const float dt, float dir);
 	void moveHead();

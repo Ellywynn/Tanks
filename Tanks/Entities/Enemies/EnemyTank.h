@@ -18,6 +18,8 @@ public:
 	virtual void move(const float dt) = 0;
 
 	Player* player;
+	sf::RectangleShape triggerArea;
+	bool attacked;
 
 	float headRotationSpeed;
 	

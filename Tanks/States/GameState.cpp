@@ -87,7 +87,7 @@ void GameState::checkCollisions()
 void GameState::initVariables()
 {
 	playerCamera.setSize(static_cast<sf::Vector2f>(window->getSize()));
-	playerCamera.zoom(2.f);
+	playerCamera.zoom(3.f);
 	window->setView(playerCamera);
 	showHitboxes = true;
 

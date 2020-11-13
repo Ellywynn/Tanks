@@ -18,8 +18,8 @@ EnemyLittleTank::EnemyLittleTank(ResourceHolder<sf::Texture, Textures>* textures
 	body.setOrigin(body.getGlobalBounds().width / 2.f,
 		body.getGlobalBounds().height / 2.f);
 
-	head.setPosition(100.f, 100.f);
-	body.setPosition(100.f, 100.f);
+	head.setPosition(-300.f, -300.f);
+	body.setPosition(-300.f, -300.f);
 
 	movementSpeed = 100.f;
 	headRotationSpeed = 30.f;
@@ -28,6 +28,12 @@ EnemyLittleTank::EnemyLittleTank(ResourceHolder<sf::Texture, Textures>* textures
 	damage = 200.f;
 	rotationSpeed = 50.f;
 	attackSpeed = sf::seconds(1.f);
+
+	attacked = false;
+	triggerArea.setSize(sf::Vector2f(500.f, 500.f));
+	triggerArea.setOrigin(triggerArea.getSize().x / 2.f,
+		triggerArea.getSize().y / 2.f);
+	triggerArea.setPosition(hb_body.getPosition());
 }
 
 EnemyLittleTank::~EnemyLittleTank()
@@ -39,6 +45,13 @@ void EnemyLittleTank::update(const float dt)
 	rotateBody(dt);
 	rotateHead(dt);
 	move(dt);
+}
+
+void EnemyLittleTank::render(sf::RenderTarget* target)
+{
+	target->draw(body);
+	target->draw(head);
+	target->draw(triggerArea);
 }
 
 void EnemyLittleTank::shoot(const sf::Vector2f& velocity)
@@ -81,28 +94,32 @@ void EnemyLittleTank::rotateBody(const float dt)
 
 void EnemyLittleTank::rotateHead(const float dt)
 {
-	sf::Vector2f thisCenterPos(head.getPosition());
-	sf::Vector2f lenDiff = player->getPosition() - thisCenterPos;
+	if (attacked ||
+		triggerArea.getGlobalBounds().intersects(player->getGlobalBounds()))
+	{
+		sf::Vector2f thisCenterPos(head.getPosition());
+		sf::Vector2f lenDiff = player->getPosition() - thisCenterPos;
 
-	float angle = std::atan2f(lenDiff.y, lenDiff.x) * (180.f / 3.1415f);
-	float rspeed = headRotationSpeed * dt;
+		float angle = std::atan2f(lenDiff.y, lenDiff.x) * (180.f / 3.1415f);
+		float rspeed = headRotationSpeed * dt;
 
-	float aMod = std::fmod(angle - head.getRotation(), 360.f);
-	float aDiff = aMod < 0.f ? aMod + 180.f : aMod - 180.f;
+		float aMod = std::fmod(angle - head.getRotation(), 360.f);
+		float aDiff = aMod < 0.f ? aMod + 180.f : aMod - 180.f;
 
-	float newRotation = head.getRotation();
+		float newRotation = head.getRotation();
 
-	if (aDiff < -rspeed) {
-		newRotation -= rspeed;
+		if (aDiff < -rspeed) {
+			newRotation -= rspeed;
+		}
+		else if (aDiff > rspeed) {
+			newRotation += rspeed;
+		}
+		else {
+			aDiff = 0.f;
+			newRotation = angle - 180.f;
+		}
+		head.setRotation(newRotation);
 	}
-	else if (aDiff > rspeed) {
-		newRotation += rspeed;
-	}
-	else {
-		aDiff = 0.f;
-		newRotation = angle - 180.f;
-	}
-	head.setRotation(newRotation);
 }
 
 void EnemyLittleTank::move(const float dt)
@@ -121,6 +138,7 @@ void EnemyLittleTank::move(const float dt)
 			body.move(velocity);
 			hb_body.move(velocity);
 			hb_head.move(velocity);
+			triggerArea.move(velocity);
 		}
 		else
 		{
