@@ -1,4 +1,4 @@
 .vs
 bin
-.vcxproj
-.sln
+*.vcxproj
+*.sln
