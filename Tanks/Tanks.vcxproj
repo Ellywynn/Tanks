@@ -182,6 +182,7 @@
     <ClInclude Include="Entities\Enemies\EnemyTank.h" />
     <ClInclude Include="Entities\Enemies\EnemyLittleTank.h" />
     <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="GUI\DropDownList.h" />
     <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="Main\Game.h" />
     <ClInclude Include="Projectiles\Projectile.h" />

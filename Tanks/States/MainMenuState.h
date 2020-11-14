@@ -16,7 +16,7 @@ public:
 	void update(const float dt) override;
 	void render(sf::RenderTarget* target = nullptr) override;
 private:
-	Slider* slider;
+	DropDownList<float>* ddl;
 
 	// Update functions
 	void updateButtons() override;

@@ -12,15 +12,16 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 	initSprites();
 	initButtons();
 
-	slider = new Slider(100.f, 30.f, 600.f, 500.f, 8.f, 0.f, 1.f, 5.f, &mousePosWindow);
+	ddl = new DropDownList<float>(500.f, 30.f, 500.f, 400.f, &fonts.get(Fonts::Arial));
+	ddl->add(30.f, "30");
+	ddl->add(50.f, "50");
+	ddl->add(70.f, "70");
 }
 
 MainMenuState::~MainMenuState()
 {
 	for (auto& i : buttons)
 		delete i.second;
-
-	delete slider;
 }
 
 void MainMenuState::initKeybinds()
@@ -128,7 +129,7 @@ void MainMenuState::handleEvents()
 void MainMenuState::update(const float dt)
 {
 	updateInput(dt);
-	slider->update(dt);
+	ddl->update(dt, mousePosWindow, event);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
@@ -137,6 +138,5 @@ void MainMenuState::render(sf::RenderTarget* target)
 		window->draw(i.second);
 	for (auto& i : buttons)
 		i.second->render(*window);
-
-	slider->render(window);
+	ddl->render(window);
 }

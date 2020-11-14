@@ -9,7 +9,7 @@ class Slider
 public:
 	Slider(float w, float h, float x, float y,
 		float initValue, float minValue, float maxValue,
-		float step, sf::Vector2i* mousePos);
+		sf::Vector2i* mousePos);
 	~Slider();
 
 	void update(const float dt);
@@ -30,7 +30,6 @@ public:
 	float minValue;
 	float maxValue;
 
-	float step;
 	float stepRange;
 
 	float getValue() const;

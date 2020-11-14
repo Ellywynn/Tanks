@@ -1,8 +1,8 @@
 #include "Slider.h"
 
 Slider::Slider(float w, float h, float x, float y,
-	float initValue, float minValue, float maxValue,
-	float step, sf::Vector2i* mousePos)
+	float initValue, float minValue,
+	float maxValue, sf::Vector2i* mousePos)
 	:font(nullptr)
 {
 	this->mousePosition = mousePos;
@@ -10,7 +10,7 @@ Slider::Slider(float w, float h, float x, float y,
 	strip.setSize(sf::Vector2f(w, h));
 	strip.setOrigin(w / 2.f, h / 2.f);
 	strip.setPosition(x, y);
-	strip.setOutlineThickness(3.f);
+	strip.setOutlineThickness(7.f);
 	strip.setOutlineColor(sf::Color::Cyan);
 
 	pointer.setSize(sf::Vector2f(5.f, h * 1.5f));
@@ -22,7 +22,6 @@ Slider::Slider(float w, float h, float x, float y,
 	value = initValue;
 	this->minValue = minValue;
 	this->maxValue = maxValue;
-	this->step = step;
 
 	// the next x coordinate of the pointer
 	stepRange = w/(maxValue - minValue);
