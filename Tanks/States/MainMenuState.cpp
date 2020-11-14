@@ -11,17 +11,12 @@ MainMenuState::MainMenuState(sf::RenderWindow* window,
 	loadAssets();
 	initSprites();
 	initButtons();
-
-	ddl = new DropDownList<float>(500.f, 30.f, 500.f, 400.f, &fonts.get(Fonts::Arial));
-	ddl->add(30.f, "30");
-	ddl->add(50.f, "50");
-	ddl->add(70.f, "70");
 }
 
 MainMenuState::~MainMenuState()
 {
-	for (auto& i : buttons)
-		delete i.second;
+	for (auto& b : buttons)
+		delete b.second;
 }
 
 void MainMenuState::initKeybinds()
@@ -55,8 +50,8 @@ void MainMenuState::initVariables()
 void MainMenuState::updateButtons()
 {
 	updateMousePositions();
-	for (auto& i : buttons)
-		i.second->update(event, mousePosWindow);
+	for (auto& b : buttons)
+		b.second->update(event, mousePosWindow);
 	if (buttons["Play"]->isButtonPressed())
 		pushGameState();
 	if (buttons["Exit"]->isButtonPressed())
@@ -129,14 +124,12 @@ void MainMenuState::handleEvents()
 void MainMenuState::update(const float dt)
 {
 	updateInput(dt);
-	ddl->update(dt, mousePosWindow, event);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
 {
-	for (auto& i : sprites)
-		window->draw(i.second);
-	for (auto& i : buttons)
-		i.second->render(*window);
-	ddl->render(window);
+	for (auto& s : sprites)
+		window->draw(s.second);
+	for (auto& b : buttons)
+		b.second->render(*window);
 }

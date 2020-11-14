@@ -31,7 +31,7 @@ public:
 	sf::Text buttonText;
 	sf::Font* font;
 public: // Functions
-	void update(sf::Event& event, sf::Vector2i mousePos);
+	void update(sf::Event& event, const sf::Vector2i& mousePos);
 	void render(sf::RenderTarget& target);
 
 	void reset();

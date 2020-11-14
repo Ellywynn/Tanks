@@ -172,6 +172,7 @@
     <ClCompile Include="States\MainMenuState.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="States\GameState.cpp" />
+    <ClCompile Include="States\SettingsState.cpp" />
     <ClCompile Include="States\State.cpp" />
     <ClCompile Include="Entities\Tank.cpp" />
     <ClCompile Include="Utils\Hitbox.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Entities\Player\PlayerTier1Tank.h" />
     <ClInclude Include="include\ResourceHolder.h" />
     <ClInclude Include="include\StandartBullet.h" />
+    <ClInclude Include="States\SettingsState.h" />
     <ClInclude Include="States\State.h" />
     <ClInclude Include="States\MainMenuState.h" />
     <ClInclude Include="Entities\Tank.h" />

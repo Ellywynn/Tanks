@@ -3,6 +3,7 @@
 
 #include "../States/GameState.h"
 #include "../States/MainMenuState.h"
+#include "../States/SettingsState.h"
 
 class Game
 {

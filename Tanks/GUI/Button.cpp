@@ -29,7 +29,7 @@ Button::~Button()
 	
 }
 
-void Button::update(sf::Event& event, sf::Vector2i mousePos)
+void Button::update(sf::Event& event, const sf::Vector2i& mousePos)
 {	
 	if (border.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
 		currentState = ButtonState::HOVER;
