@@ -1,7 +1,6 @@
 #include "Slider.h"
 
-Slider::Slider(float w, float h, float x, float y,
-	float initValue, float minValue,
+Slider::Slider(float w, float h, float x, float y, float minValue,
 	float maxValue, sf::Vector2i* mousePos)
 	:font(nullptr)
 {
@@ -10,7 +9,7 @@ Slider::Slider(float w, float h, float x, float y,
 	strip.setSize(sf::Vector2f(w, h));
 	strip.setOrigin(w / 2.f, h / 2.f);
 	strip.setPosition(x, y);
-	strip.setOutlineThickness(7.f);
+	strip.setOutlineThickness(2.f);
 	strip.setOutlineColor(sf::Color::Cyan);
 
 	pointer.setSize(sf::Vector2f(5.f, h * 1.5f));
@@ -19,9 +18,9 @@ Slider::Slider(float w, float h, float x, float y,
 	minCursorPos = strip.getPosition().x - w / 2.f;
 	maxCursorPos = strip.getPosition().x + w / 2.f;
 
-	value = initValue;
 	this->minValue = minValue;
 	this->maxValue = maxValue;
+	this->value = maxValue;
 
 	// the next x coordinate of the pointer
 	stepRange = w/(maxValue - minValue);
@@ -33,10 +32,10 @@ Slider::Slider(float w, float h, float x, float y,
 	pointerHoverColor = sf::Color::Black;
 	pointerActiveColor = sf::Color::Green;
 
-	float initialPointerPosition = maxCursorPos -
+	float pointerPosition = maxCursorPos -
 		stepRange * (maxValue - value);
 
-	pointer.setPosition(sf::Vector2f(initialPointerPosition, y));
+	pointer.setPosition(sf::Vector2f(pointerPosition, y));
 }
 
 Slider::~Slider()
@@ -86,7 +85,6 @@ void Slider::update(const float dt)
 				2. We substract this range from the end of the slider
 			*/
 			float pointerPos = maxCursorPos - stepRange * (maxValue - value);
-			std::cout << value << '\n';
 			pointer.setPosition(pointerPos, pointer.getPosition().y);
 		}
 	}
@@ -101,6 +99,16 @@ void Slider::render(sf::RenderTarget* target)
 {
 	target->draw(strip);
 	target->draw(pointer);
+}
+
+void Slider::setValue(float val)
+{
+	value = val;
+
+	float pointerPosition = maxCursorPos -
+		stepRange * (maxValue - value);
+
+	pointer.setPosition(sf::Vector2f(pointerPosition, pointer.getPosition().y));
 }
 
 float Slider::getValue() const

@@ -7,14 +7,20 @@
 class Slider
 {
 public:
-	Slider(float w, float h, float x, float y,
-		float initValue, float minValue, float maxValue,
+	Slider(float w, float h, float x, float y, float minValue, float maxValue,
 		sf::Vector2i* mousePos);
 	~Slider();
 
 	void update(const float dt);
 	void render(sf::RenderTarget* target);
 
+	sf::Text valueText;
+	sf::Text sliderText;
+
+	void setValue(float val);
+
+	float getValue() const;
+private:
 	sf::Vector2i* mousePosition;
 
 	sf::RectangleShape strip;
@@ -23,7 +29,6 @@ public:
 	float maxCursorPos;
 	float minCursorPos;
 
-	sf::Text valueText;
 	sf::Font* font;
 
 	float value;
@@ -32,8 +37,6 @@ public:
 
 	float stepRange;
 
-	float getValue() const;
-private:
 	sf::Color stripIdleColor;
 	sf::Color stripHoverColor;
 

@@ -20,6 +20,16 @@ void SettingsState::updateButtons()
 {
 	for (auto& b : buttons)
 		b.second->update(event, mousePosWindow);
+
+	if (buttons["Apply"]->isButtonPressed())
+	{
+		// apply settings
+	}
+
+	if (buttons["Exit"]->isButtonPressed())
+	{
+		endState();
+	}
 }
 
 void SettingsState::handleEvents()
@@ -53,6 +63,7 @@ void SettingsState::render(sf::RenderTarget* target)
 
 void SettingsState::endState()
 {
+	quit = true;
 }
 
 void SettingsState::initKeybinds()
@@ -61,14 +72,15 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initButtons()
 {
-	buttons["Apply"] = new Button("Apply", 700.f, 700.f, &fonts.get(Fonts::Arial));
-	buttons["Exit"] = new Button("Apply", 900.f, 700.f, &fonts.get(Fonts::Arial));
+	buttons["Apply"] = new Button("Apply", 300.f, 500.f, &fonts.get(Fonts::Arial));
+	buttons["Exit"] = new Button("Exit", 410.f, 500.f, &fonts.get(Fonts::Arial));
 }
 
 void SettingsState::initVariables()
 {
-	resolutions = new DropDownList<sf::VideoMode>(250.f, 50.f, 600.f, 300.f, &fonts.get(Fonts::Arial));
-	musicSlider = new Slider(250.f, 50.f, 600.f, 450.f, 50.f, 0.f, 100.f, &mousePosWindow);
+	resolutions = new DropDownList<sf::VideoMode>(250.f, 30.f,
+		150.f, 50.f, &fonts.get(Fonts::Arial));
+	musicSlider = new Slider(250.f, 20.f, 150.f, 120.f, 0.f, 100.f, &mousePosWindow);
 
 	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
 	for (int i = 0; i < availableModes.size(); i++)
