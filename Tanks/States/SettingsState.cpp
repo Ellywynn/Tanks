@@ -2,8 +2,8 @@
 
 SettingsState::SettingsState(sf::RenderWindow* window,
 	std::unordered_map<std::string, int>* supportedKeys,
-	std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+	std::stack<State*>* states, SettingsContainer* gameSettings)
+	:State(window, supportedKeys, states), settings(gameSettings)
 {
 	loadAssets();
 	initVariables();
@@ -13,7 +13,8 @@ SettingsState::SettingsState(sf::RenderWindow* window,
 SettingsState::~SettingsState()
 {
 	delete resolutions;
-	delete musicSlider;
+	delete musicVol;
+	delete soundsVol;
 }
 
 void SettingsState::updateButtons()
@@ -23,11 +24,33 @@ void SettingsState::updateButtons()
 
 	if (buttons["Apply"]->isButtonPressed())
 	{
-		// apply settings
+		if (resolutions->isChanged())
+		{
+			window->create(resolutions->getActiveValue(), settings->title);
+		}
+
+		settings->resolution = resolutions->getActiveValue();
+		settings->musicVolume = musicVol->getValue();
+		settings->soundsVolume = soundsVol->getValue();
+
+		settings->saveToFile();
+
+		resolutions->resetChange();
+		musicVol->resetChange();
+		soundsVol->resetChange();
 	}
 
 	if (buttons["Exit"]->isButtonPressed())
 	{
+		if (!soundsVol->isChanged())
+		{
+			// set default value here
+		}
+
+		if (!musicVol->isChanged())
+		{
+			// set default value here
+		}
 		endState();
 	}
 }
@@ -47,22 +70,25 @@ void SettingsState::updateInput(const float dt)
 void SettingsState::update(const float dt)
 {
 	updateMousePositions();
-	musicSlider->update(dt);
-	resolutions->update(dt, mousePosWindow, event);
+	updateWidgets(dt);
 	updateButtons();
 }
 
 void SettingsState::render(sf::RenderTarget* target)
 {
-	resolutions->render(window);
-	musicSlider->render(window);
-
 	for (auto& b : buttons)
 		b.second->render(*window);
+
+	musicVol->render(window);
+	soundsVol->render(window);
+	resolutions->render(window);
 }
 
 void SettingsState::endState()
 {
+	resolutions->resetChange();
+	musicVol->resetChange();
+	soundsVol->resetChange();
 	quit = true;
 }
 
@@ -79,18 +105,51 @@ void SettingsState::initButtons()
 void SettingsState::initVariables()
 {
 	resolutions = new DropDownList<sf::VideoMode>(250.f, 30.f,
-		150.f, 50.f, &fonts.get(Fonts::Arial));
-	musicSlider = new Slider(250.f, 20.f, 150.f, 120.f, 0.f, 100.f, &mousePosWindow);
+		650.f, 60.f, &fonts.get(Fonts::Arial));
 
 	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
-	for (int i = 0; i < availableModes.size(); i++)
+	for (size_t i = 0; i < availableModes.size(); i++)
 	{
 		resolutions->add(availableModes[i], std::to_string(availableModes[i].width)
 			+ "x" + std::to_string(availableModes[i].height));
 	}
+
+	resolutions->setActiveValue(settings->resolution,
+		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
+
+	musicVol = new Slider(250.f, 20.f, 150.f, 60.f, 0, 100, &mousePosWindow, "%", "Music");
+	musicVol->setFont(&fonts.get(Fonts::Arial));
+	musicVol->setValue(settings->musicVolume);
+
+	soundsVol = new Slider(250.f, 20.f, 150.f, 130.f, 0, 100, &mousePosWindow, "%", "Sounds");
+	soundsVol->setFont(&fonts.get(Fonts::Arial));
+	soundsVol->setValue(settings->soundsVolume);
 }
 
 void SettingsState::loadAssets()
 {
+	settings->loadFromFile();
 	fonts.load(Fonts::Arial, "assets/fonts/arial.ttf");
+}
+
+void SettingsState::updateWidgets(const float dt)
+{
+	resolutions->update(dt, mousePosWindow, event);
+	musicVol->update(dt);
+	soundsVol->update(dt);
+
+	if (musicVol->isChanged())
+	{
+		// set new volume
+	}
+
+	if (soundsVol->isChanged())
+	{
+		// set new volume
+	}
+
+	if (musicVol->isChanged() || soundsVol->isChanged())
+	{
+		// set new volume right now
+	}
 }

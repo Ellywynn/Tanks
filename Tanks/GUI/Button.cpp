@@ -3,13 +3,15 @@
 Button::Button(const std::string& btnText, float x, float y,
 	sf::Font* buttonFont, float w, float h)
 {
-	idleColor = sf::Color::Red;
-	hoverColor = sf::Color::Yellow;
-	activeColor = sf::Color::Green;
+	idleColor = sf::Color::Black;
+	hoverColor = sf::Color(25, 25, 25);
+	activeColor = sf::Color(75, 75, 75);
 
 	border.setSize(sf::Vector2f(w, h));
 	border.setPosition(x, y);
 	border.setFillColor(idleColor);
+	border.setOutlineThickness(3.f);
+	border.setOutlineColor(sf::Color(112, 112, 112));
 
 	font = buttonFont;
 	buttonText.setString(btnText);
@@ -26,11 +28,11 @@ Button::Button(const std::string& btnText, float x, float y,
 
 Button::~Button()
 {
-	
+
 }
 
 void Button::update(sf::Event& event, const sf::Vector2i& mousePos)
-{	
+{
 	if (border.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
 		currentState = ButtonState::HOVER;
 		if (event.type == sf::Event::MouseButtonPressed && event.key.code == sf::Mouse::Left) {

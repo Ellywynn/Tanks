@@ -7,19 +7,21 @@
 class Slider
 {
 public:
-	Slider(float w, float h, float x, float y, float minValue, float maxValue,
-		sf::Vector2i* mousePos);
+	Slider(float w, float h, float x, float y, int minValue, int maxValue,
+		sf::Vector2i* mousePos,
+		const std::string& measure = "", const std::string& sliderName = "");
 	~Slider();
 
 	void update(const float dt);
 	void render(sf::RenderTarget* target);
 
-	sf::Text valueText;
-	sf::Text sliderText;
+	void setValue(int val);
+	void setFont(sf::Font* font);
+	void setName(const std::string& name);
 
-	void setValue(float val);
-
-	float getValue() const;
+	int getValue() const;
+	bool isChanged() const;
+	void resetChange();
 private:
 	sf::Vector2i* mousePosition;
 
@@ -29,11 +31,14 @@ private:
 	float maxCursorPos;
 	float minCursorPos;
 
+	sf::Text valueText;
+	sf::Text sliderName;
+	std::string measure;
 	sf::Font* font;
 
-	float value;
-	float minValue;
-	float maxValue;
+	int value;
+	int minValue;
+	int maxValue;
 
 	float stepRange;
 
@@ -43,6 +48,8 @@ private:
 	sf::Color pointerIdleColor;
 	sf::Color pointerHoverColor;
 	sf::Color pointerActiveColor;
+
+	bool changed;
 };
 
 #endif

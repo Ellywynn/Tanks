@@ -27,6 +27,7 @@ private:
 
 	sf::Clock dtClock;				// Game clock
 	float dt;						// Delta time
+	SettingsContainer settings;
 
 	// Allowed keys
 	std::unordered_map<std::string, int> supportedKeys;

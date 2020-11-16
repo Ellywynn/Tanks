@@ -175,6 +175,8 @@
     <ClCompile Include="States\SettingsState.cpp" />
     <ClCompile Include="States\State.cpp" />
     <ClCompile Include="Entities\Tank.cpp" />
+    <ClCompile Include="Utils\SettingsContainer.cpp" />
+    <ClInclude Include="Utils\SettingsContainer.h" />
     <ClCompile Include="Utils\Hitbox.cpp" />
     <ClCompile Include="Utils\SAT.cpp" />
   </ItemGroup>

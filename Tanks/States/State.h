@@ -3,11 +3,12 @@
 
 #include "../Entities/Entity.h"
 #include "../GUI/GUI.h"
+#include "../Utils/SettingsContainer.h"
 
-enum class Textures 
+enum class Textures
 {
 	MainMenu_Background = 0,
-	
+
 	Game_PlayerHead,
 	Game_PlayerBody,
 	Game_EnemyLT_Head,
@@ -16,7 +17,7 @@ enum class Textures
 	Game_StandartBullet
 };
 
-enum class Sounds 
+enum class Sounds
 {
 
 };
@@ -32,8 +33,9 @@ class State
 protected:
 	// We need a pointer to the states stack to switch state
 	std::stack<State*>* states;
-	// This pointer is needede to render the state stuff
+	// This pointer is needed to render the state stuff
 	sf::RenderWindow* window;
+
 	// Keys
 	std::unordered_map<std::string, int>* supportedKeys;
 	std::unordered_map<std::string, int> keybinds;

@@ -13,11 +13,11 @@ class DDL_Element
 public:
 	DDL_Element()
 	{
-		idleColor = sf::Color::Green;
-		hoverColor = sf::Color::Black;
+		idleColor = sf::Color::Black;
+		hoverColor = sf::Color(25, 25, 25);
 
-		border.setOutlineThickness(2.f);
-		border.setOutlineColor(sf::Color::Red);
+		border.setOutlineThickness(3.f);
+		border.setOutlineColor(sf::Color(112, 112, 112));
 		border.setFillColor(idleColor);
 
 		valueText.setCharacterSize(14u);
@@ -52,6 +52,8 @@ public:
 
 		opened = false;
 		lock = false;
+		hovered = false;
+		changed = false;
 		textFont = font;
 	}
 	~DropDownList()
@@ -79,23 +81,29 @@ public:
 
 			if (opened)
 			{
-				for (int i = 1; i < elements.size(); i++)
+				hovered = false;
+				for (size_t i = 1; i < elements.size(); i++)
 				{
-					if (elements[i]->border.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
+					if (!hovered && elements[i]->border.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
 					{
 						elements[i]->border.setFillColor(elements[i]->hoverColor);
+						hovered = true;
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
-							std::cout << "CHANGED\n";
 							opened = false;
 
 							elements[0]->value = elements[i]->value;
 							elements[0]->valueText.setString(elements[i]->valueText.getString());
+							changed = true;
 						}
 					}
 					else
+					{
 						elements[i]->border.setFillColor(elements[i]->idleColor);
+					}
 				}
+
+
 			}
 		}
 	}
@@ -157,11 +165,30 @@ public:
 	{
 		return elements[0]->value;
 	}
+
+	void setActiveValue(const T& value, const std::string& name)
+	{
+		elements[0]->value = value;
+		elements[0]->valueText.setString(name);
+	}
+
+	void resetChange()
+	{
+		changed = false;
+	}
+
+	bool isChanged() const
+	{
+		return changed;
+	}
 private:
 	std::vector<DDL_Element<T>*> elements;
 	DDL_Element<T> activeElement;
 	bool opened;
 	bool lock;
+	bool hovered;
+
+	bool changed;
 
 	sf::Font* textFont;
 };

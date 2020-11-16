@@ -59,38 +59,18 @@ void Game::updateDt()
 
 void Game::initWindow()
 {
-	// window config file
-	std::ifstream wcfg("config/window.ini");
+	settings.loadFromFile();
 
-	sf::VideoMode window_size(800, 600);
-	std::string window_title = "";
-	uint32_t framerate = 60;
-	bool vsync = false;
-	bool fullscreen = false;
-
-	if (wcfg.is_open()) {
-		std::getline(wcfg, window_title);
-		wcfg >> window_size.width >> window_size.height;
-		wcfg >> framerate;
-		wcfg >> vsync;
-		wcfg >> fullscreen;
-	}
-	else {
-		std::cerr << "[ERROR]: Cannot open file cfg/window.ini\n";
-	}
-
-	wcfg.close();
-
-	window = new sf::RenderWindow(window_size, window_title,
-		fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
-	window->setFramerateLimit(framerate);
-	window->setVerticalSyncEnabled(vsync);
+	window = new sf::RenderWindow(settings.resolution, settings.title,
+		settings.fullscreen ? sf::Style::Fullscreen : sf::Style::Default);
+	window->setFramerateLimit(settings.framerate);
+	window->setVerticalSyncEnabled(settings.vsynch);
 }
 
 void Game::initStates()
 {
 	//states.push(new MainMenuState(window, &supportedKeys,&states));
-	states.push(new SettingsState(window, &supportedKeys, &states));
+	states.push(new SettingsState(window, &supportedKeys, &states, &settings));
 }
 
 void Game::initKeys()
