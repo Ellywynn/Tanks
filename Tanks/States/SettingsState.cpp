@@ -12,9 +12,12 @@ SettingsState::SettingsState(sf::RenderWindow* window,
 
 SettingsState::~SettingsState()
 {
-	delete resolutions;
-	delete musicVol;
-	delete soundsVol;
+	delete ddl_resolutions;
+	delete sl_musicVol;
+	delete sl_soundsVol;
+	delete sl_framerate;
+	delete cb_fullscreen;
+	delete cb_vsynch;
 }
 
 void SettingsState::updateButtons()
@@ -24,14 +27,14 @@ void SettingsState::updateButtons()
 
 	if (buttons["Apply"]->isButtonPressed())
 	{
-		if (resolutions->isChanged())
+		if (ddl_resolutions->isChanged())
 		{
-			window->create(resolutions->getActiveValue(), settings->title);
+			window->create(ddl_resolutions->getActiveValue(), settings->title);
 		}
 
-		settings->resolution = resolutions->getActiveValue();
-		settings->musicVolume = musicVol->getValue();
-		settings->soundsVolume = soundsVol->getValue();
+		settings->resolution = ddl_resolutions->getActiveValue();
+		settings->musicVolume = sl_musicVol->getValue();
+		settings->soundsVolume = sl_soundsVol->getValue();
 
 		settings->saveToFile();
 
@@ -82,6 +85,7 @@ void SettingsState::render(sf::RenderTarget* target)
 	musicVol->render(window);
 	soundsVol->render(window);
 	resolutions->render(window);
+	chbox->render(window);
 }
 
 void SettingsState::endState()
@@ -104,26 +108,29 @@ void SettingsState::initButtons()
 
 void SettingsState::initVariables()
 {
-	resolutions = new DropDownList<sf::VideoMode>(250.f, 30.f,
+	ddl_resolutions = new DropDownList<sf::VideoMode>(250.f, 30.f,
 		650.f, 60.f, &fonts.get(Fonts::Arial));
 
 	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
 	for (size_t i = 0; i < availableModes.size(); i++)
 	{
-		resolutions->add(availableModes[i], std::to_string(availableModes[i].width)
+		ddl_resolutions->add(availableModes[i], std::to_string(availableModes[i].width)
 			+ "x" + std::to_string(availableModes[i].height));
 	}
 
-	resolutions->setActiveValue(settings->resolution,
+	ddl_resolutions->setActiveValue(settings->resolution,
 		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
 
-	musicVol = new Slider(250.f, 20.f, 150.f, 60.f, 0, 100, &mousePosWindow, "%", "Music");
+
+	sl_musicVol = new Slider(250.f, 20.f, 150.f, 60.f, 0, 100, &mousePosWindow, "%", "Music");
 	musicVol->setFont(&fonts.get(Fonts::Arial));
 	musicVol->setValue(settings->musicVolume);
 
 	soundsVol = new Slider(250.f, 20.f, 150.f, 130.f, 0, 100, &mousePosWindow, "%", "Sounds");
 	soundsVol->setFont(&fonts.get(Fonts::Arial));
 	soundsVol->setValue(settings->soundsVolume);
+
+	chbox = new Checkbox(50.f, 500.f, 100.f, true);
 }
 
 void SettingsState::loadAssets()
@@ -137,6 +144,7 @@ void SettingsState::updateWidgets(const float dt)
 	resolutions->update(dt, mousePosWindow, event);
 	musicVol->update(dt);
 	soundsVol->update(dt);
+	chbox->update(dt, mousePosWindow);
 
 	if (musicVol->isChanged())
 	{

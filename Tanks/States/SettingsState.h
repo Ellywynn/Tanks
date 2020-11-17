@@ -30,9 +30,12 @@ private:
 
 	SettingsContainer* settings;
 
-	Slider* musicVol;
-	Slider* soundsVol;
-	DropDownList<sf::VideoMode>* resolutions;
+	Slider* sl_musicVol;
+	Slider* sl_soundsVol;
+	Slider* sl_framerate;
+	Checkbox* cb_fullscreen;
+	Checkbox* cb_vsynch;
+	DropDownList<sf::VideoMode>* ddl_resolutions;
 
 private:
 	void updateWidgets(const float dt);

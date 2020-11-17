@@ -162,6 +162,7 @@
     <ClCompile Include="Entities\Enemies\EnemyLittleTank.cpp" />
     <ClCompile Include="Entities\Player\PlayerTier1Tank.cpp" />
     <ClCompile Include="Entities\Enemies\EnemyTank.cpp" />
+    <ClCompile Include="GUI\Checkbox.cpp" />
     <ClCompile Include="Main\Game.cpp" />
     <ClCompile Include="Main\Main.cpp" />
     <ClCompile Include="Projectiles\Projectile.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="States\State.cpp" />
     <ClCompile Include="Entities\Tank.cpp" />
     <ClCompile Include="Utils\SettingsContainer.cpp" />
+    <ClInclude Include="GUI\Checkbox.h" />
     <ClInclude Include="Utils\SettingsContainer.h" />
     <ClCompile Include="Utils\Hitbox.cpp" />
     <ClCompile Include="Utils\SAT.cpp" />

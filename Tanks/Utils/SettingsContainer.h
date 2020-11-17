@@ -13,6 +13,7 @@ public:
 
 	void loadFromFile(const std::string& filename = "config/window.ini");
 	void saveToFile(const std::string& filename = "config/window.ini");
+	void setDefaultSettings(const std::string& filename = "config/window.ini");
 
 	sf::VideoMode resolution;
 	std::string title;
