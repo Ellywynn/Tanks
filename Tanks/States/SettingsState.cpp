@@ -38,19 +38,19 @@ void SettingsState::updateButtons()
 
 		settings->saveToFile();
 
-		resolutions->resetChange();
-		musicVol->resetChange();
-		soundsVol->resetChange();
+		ddl_resolutions->resetChange();
+		sl_musicVol->resetChange();
+		sl_soundsVol->resetChange();
 	}
 
 	if (buttons["Exit"]->isButtonPressed())
 	{
-		if (!soundsVol->isChanged())
+		if (!sl_soundsVol->isChanged())
 		{
 			// set default value here
 		}
 
-		if (!musicVol->isChanged())
+		if (!sl_musicVol->isChanged())
 		{
 			// set default value here
 		}
@@ -79,20 +79,30 @@ void SettingsState::update(const float dt)
 
 void SettingsState::render(sf::RenderTarget* target)
 {
+	window->draw(background);
 	for (auto& b : buttons)
 		b.second->render(*window);
 
-	musicVol->render(window);
-	soundsVol->render(window);
-	resolutions->render(window);
-	chbox->render(window);
+	for (auto& t : settingsTexts)
+		window->draw(t);
+	window->draw(musicText);
+	window->draw(soundsText);
+
+	sl_musicVol->render(window);
+	sl_soundsVol->render(window);
+	ddl_resolutions->render(window);
+	cb_fullscreen->render(window);
+	cb_vsynch->render(window);
 }
 
 void SettingsState::endState()
 {
-	resolutions->resetChange();
-	musicVol->resetChange();
-	soundsVol->resetChange();
+	ddl_resolutions->resetChange();
+	sl_musicVol->resetChange();
+	sl_soundsVol->resetChange();
+	cb_fullscreen->resetChange();
+	cb_vsynch->resetChange();
+
 	quit = true;
 }
 
@@ -108,8 +118,51 @@ void SettingsState::initButtons()
 
 void SettingsState::initVariables()
 {
+	sf::Font& arial = fonts.get(Fonts::Arial);
+
+	background.setSize(sf::Vector2f(window->getSize().x * 0.8f,
+		window->getSize().y * 0.8f));
+	background.setOrigin(background.getSize() / 2.f);
+	background.setPosition(window->getSize().x / 2.f, window->getSize().y / 2.f);
+	background.setFillColor(sf::Color(0, 0, 0, 200));
+
+	settingsTexts[0].setString("Resolution");
+	settingsTexts[1].setString("Max FPS");
+	settingsTexts[2].setString("Fullscreen");
+	settingsTexts[3].setString("VSynch");
+
+	musicText.setString("Music");
+	soundsText.setString("Sounds");
+	musicText.setFont(arial);
+	soundsText.setFont(arial);
+	musicText.setCharacterSize(16u);
+	soundsText.setCharacterSize(16u);
+
+	musicText.setPosition(
+		background.getPosition().x - background.getGlobalBounds().width / 2.f
+		+ 20.f - musicText.getGlobalBounds().width,
+		background.getPosition().y - background.getOrigin().y
+		+ 20.f);
+
+	soundsText.setPosition(
+		background.getPosition().x - background.getGlobalBounds().width / 2.f
+		+ 20.f - soundsText.getGlobalBounds().width,
+		background.getPosition().y - background.getOrigin().y
+		+ 20.f);
+
+	for (int i = 1; i <= settingsTexts.size(); i++)
+	{
+		settingsTexts[i - 1].setFont(arial);
+		settingsTexts[i - 1].setCharacterSize(16u);
+		settingsTexts[i - 1].setPosition(
+			background.getPosition().x - background.getOrigin().x + 20.f,
+			background.getPosition().y - background.getOrigin().y
+			+ 20.f + i * settingsTexts[i - 1].getGlobalBounds().height);
+	}
+
 	ddl_resolutions = new DropDownList<sf::VideoMode>(250.f, 30.f,
-		650.f, 60.f, &fonts.get(Fonts::Arial));
+		settingsTexts[0].getPosition().x + settingsTexts[0].getGlobalBounds().width + 10.f,
+		settingsTexts[0].getPosition().y, &fonts.get(Fonts::Arial));
 
 	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
 	for (size_t i = 0; i < availableModes.size(); i++)
@@ -121,16 +174,29 @@ void SettingsState::initVariables()
 	ddl_resolutions->setActiveValue(settings->resolution,
 		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
 
+	sl_framerate = new Slider(250.f, 20.f,
+		settingsTexts[1].getPosition().x + settingsTexts[1].getGlobalBounds().width + 10.f,
+		settingsTexts[1].getPosition().y, 20, 240, &mousePosWindow);
+	sl_framerate->setFont(&fonts.get(Fonts::Arial));
+	sl_framerate->setValue(settings->framerate);
 
-	sl_musicVol = new Slider(250.f, 20.f, 150.f, 60.f, 0, 100, &mousePosWindow, "%", "Music");
-	musicVol->setFont(&fonts.get(Fonts::Arial));
-	musicVol->setValue(settings->musicVolume);
+	cb_fullscreen = new Checkbox(40.f, settingsTexts[2].getPosition().x + settingsTexts[2].getGlobalBounds().width + 10.f,
+		settingsTexts[2].getPosition().y, settings->fullscreen);
 
-	soundsVol = new Slider(250.f, 20.f, 150.f, 130.f, 0, 100, &mousePosWindow, "%", "Sounds");
-	soundsVol->setFont(&fonts.get(Fonts::Arial));
-	soundsVol->setValue(settings->soundsVolume);
+	cb_vsynch = new Checkbox(40.f, settingsTexts[3].getPosition().x + settingsTexts[3].getGlobalBounds().width + 10.f,
+		settingsTexts[3].getPosition().y, settings->vsynch);
 
-	chbox = new Checkbox(50.f, 500.f, 100.f, true);
+	sl_musicVol = new Slider(250.f, 20.f,
+		musicText.getPosition().x + musicText.getGlobalBounds().width + 10.f,
+		musicText.getPosition().y, 0, 100, &mousePosWindow, "%");
+	sl_musicVol->setFont(&fonts.get(Fonts::Arial));
+	sl_musicVol->setValue(settings->musicVolume);
+
+	sl_soundsVol = new Slider(250.f, 20.f,
+		soundsText.getPosition().x + soundsText.getGlobalBounds().width + 10.f,
+		soundsText.getPosition().y, 0, 100, &mousePosWindow, "%");
+	sl_soundsVol->setFont(&fonts.get(Fonts::Arial));
+	sl_soundsVol->setValue(settings->soundsVolume);
 }
 
 void SettingsState::loadAssets()
@@ -141,22 +207,23 @@ void SettingsState::loadAssets()
 
 void SettingsState::updateWidgets(const float dt)
 {
-	resolutions->update(dt, mousePosWindow, event);
-	musicVol->update(dt);
-	soundsVol->update(dt);
-	chbox->update(dt, mousePosWindow);
+	ddl_resolutions->update(dt, mousePosWindow, event);
+	sl_musicVol->update(dt);
+	sl_soundsVol->update(dt);
+	cb_fullscreen->update(dt, mousePosWindow);
+	cb_vsynch->update(dt, mousePosWindow);
 
-	if (musicVol->isChanged())
+	if (sl_musicVol->isChanged())
 	{
 		// set new volume
 	}
 
-	if (soundsVol->isChanged())
+	if (sl_soundsVol->isChanged())
 	{
 		// set new volume
 	}
 
-	if (musicVol->isChanged() || soundsVol->isChanged())
+	if (sl_musicVol->isChanged() || sl_soundsVol->isChanged())
 	{
 		// set new volume right now
 	}

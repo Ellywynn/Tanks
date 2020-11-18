@@ -45,7 +45,7 @@ void Game::update()
 
 void Game::render()
 {
-	window->clear();
+	window->clear(sf::Color(150,150,150));
 	if (!states.empty())
 		states.top()->render();
 	window->display();

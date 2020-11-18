@@ -45,7 +45,6 @@ public:
 	DropDownList(float w, float h, float x, float y, sf::Font* font)
 	{
 		activeElement.border.setSize(sf::Vector2f(w, h));
-		activeElement.border.setOrigin(w / 2.f, h / 2.f);
 		activeElement.border.setPosition(x, y);
 
 		activeElement.valueText.setFont(*font);
@@ -164,6 +163,11 @@ public:
 	const T& getActiveValue() const
 	{
 		return elements[0]->value;
+	}
+
+	sf::Vector2f getPosition() const
+	{
+		return elements[0]->border.getPosition();
 	}
 
 	void setActiveValue(const T& value, const std::string& name)

@@ -7,8 +7,8 @@ SettingsContainer::SettingsContainer()
 	framerate = 120;
 	fullscreen = false;
 	vsynch = false;
-	musicVolume = 100;
-	soundsVolume = 100;
+	musicVolume = 50;
+	soundsVolume = 50;
 }
 
 SettingsContainer::~SettingsContainer()
@@ -55,6 +55,19 @@ void SettingsContainer::saveToFile(const std::string& filename)
 	}
 
 	wcfg.close();
+}
+
+void SettingsContainer::setDefaultSettings(const std::string& filename)
+{
+	resolution = sf::VideoMode::getDesktopMode();
+	title = "Tanks";
+	framerate = 120;
+	fullscreen = false;
+	vsynch = false;
+	musicVolume = 50;
+	soundsVolume = 50;
+	
+	saveToFile();
 }
 
 std::string SettingsContainer::getValue(std::ifstream& file)

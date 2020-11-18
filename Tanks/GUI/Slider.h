@@ -9,7 +9,7 @@ class Slider
 public:
 	Slider(float w, float h, float x, float y, int minValue, int maxValue,
 		sf::Vector2i* mousePos,
-		const std::string& measure = "", const std::string& sliderName = "");
+		const std::string& measure = "");
 	~Slider();
 
 	void update(const float dt);
@@ -17,8 +17,8 @@ public:
 
 	void setValue(int val);
 	void setFont(sf::Font* font);
-	void setName(const std::string& name);
 
+	sf::Vector2f getPosition() const;
 	int getValue() const;
 	bool isChanged() const;
 	void resetChange();
@@ -32,7 +32,6 @@ private:
 	float minCursorPos;
 
 	sf::Text valueText;
-	sf::Text sliderName;
 	std::string measure;
 	sf::Font* font;
 

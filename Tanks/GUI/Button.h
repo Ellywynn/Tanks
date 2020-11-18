@@ -35,6 +35,7 @@ public: // Functions
 	void render(sf::RenderTarget& target);
 
 	void reset();
+	sf::Vector2f getPosition() const;
 	const bool isButtonPressed() const;
 private: // Variables
 	sf::Color idleColor;

@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "../Utils/SettingsContainer.h"
+#include <array>
 
 class SettingsState : public State
 {
@@ -37,6 +38,13 @@ private:
 	Checkbox* cb_vsynch;
 	DropDownList<sf::VideoMode>* ddl_resolutions;
 
+	sf::RectangleShape background;
+
+	// left side texts
+	std::array<sf::Text, 4> settingsTexts;
+
+	sf::Text musicText;
+	sf::Text soundsText;
 private:
 	void updateWidgets(const float dt);
 };

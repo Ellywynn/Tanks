@@ -13,11 +13,16 @@ public:
 	void update(const float dt, sf::Vector2i& mousePosition);
 	void render(sf::RenderTarget* target);
 
+
+	sf::Vector2f getPosition() const;
 	bool isSelected() const;
+	bool isChanged() const;
+	void resetChange();
 	void set(bool value);
 private:
 	bool selected;
 	bool lock;
+	bool changed;
 
 	sf::RectangleShape border;
 	sf::RectangleShape checkmark;

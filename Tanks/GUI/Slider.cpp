@@ -2,22 +2,20 @@
 
 Slider::Slider(float w, float h, float x, float y, int minValue,
 	int maxValue, sf::Vector2i* mousePos,
-	const std::string& measure, const std::string& sliderName)
+	const std::string& measure)
 	:font(nullptr)
 {
 	this->mousePosition = mousePos;
 
 	strip.setSize(sf::Vector2f(w, h));
-	strip.setOrigin(w / 2.f, h / 2.f);
 	strip.setPosition(x, y);
 	strip.setOutlineThickness(3.f);
 	strip.setOutlineColor(sf::Color(112, 112, 112));
 
 	pointer.setSize(sf::Vector2f(w / 20.f, h * 1.6f));
-	pointer.setOrigin(pointer.getSize() / 2.f);
 
-	minCursorPos = strip.getPosition().x - w / 2.f;
-	maxCursorPos = strip.getPosition().x + w / 2.f;
+	minCursorPos = strip.getPosition().x;
+	maxCursorPos = strip.getPosition().x + w;
 
 	this->minValue = minValue;
 	this->maxValue = maxValue;
@@ -27,7 +25,6 @@ Slider::Slider(float w, float h, float x, float y, int minValue,
 
 	changed = false;
 
-	this->sliderName.setString(sliderName);
 	this->valueText.setString(std::to_string(value) + measure);
 
 	// the next x coordinate of the pointer
@@ -88,7 +85,8 @@ void Slider::update(const float dt)
 				2. We substract this range from the end of the slider
 			*/
 			float pointerPos = maxCursorPos - stepRange * (maxValue - value);
-			pointer.setPosition(pointerPos, pointer.getPosition().y);
+			pointer.setPosition(pointerPos + pointer.getSize().x / 2.f,
+				pointer.getPosition().y + pointer.getSize().y / 2.f);
 
 			valueText.setString(std::to_string(value) + measure);
 			this->valueText.setPosition(maxCursorPos - valueText.getGlobalBounds().width,
@@ -105,8 +103,6 @@ void Slider::update(const float dt)
 void Slider::render(sf::RenderTarget* target)
 {
 	target->draw(strip);
-	if (!sliderName.getString().isEmpty())
-		target->draw(sliderName);
 	target->draw(valueText);
 	target->draw(pointer);
 }
@@ -126,20 +122,15 @@ void Slider::setFont(sf::Font* font)
 {
 	this->font = font;
 	valueText.setFont(*font);
-	sliderName.setFont(*font);
-
-	this->sliderName.setCharacterSize(22u);
-	this->sliderName.setPosition(minCursorPos,
-		strip.getPosition().y - strip.getSize().y - pointer.getGlobalBounds().height / 2.f - 5.f);
 
 	this->valueText.setCharacterSize(16u);
 	this->valueText.setPosition(maxCursorPos - valueText.getGlobalBounds().width,
 		strip.getPosition().y - strip.getSize().y - pointer.getGlobalBounds().height / 2.f);
 }
 
-void Slider::setName(const std::string& name)
+sf::Vector2f Slider::getPosition() const
 {
-	sliderName.setString(name);
+	return strip.getPosition();
 }
 
 int Slider::getValue() const

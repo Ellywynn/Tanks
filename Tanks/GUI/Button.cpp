@@ -58,6 +58,11 @@ void Button::reset()
 	border.setFillColor(idleColor);
 }
 
+sf::Vector2f Button::getPosition() const
+{
+	return border.getPosition();
+}
+
 const bool Button::isButtonPressed() const
 {
 	return currentState == ButtonState::ACTIVE;

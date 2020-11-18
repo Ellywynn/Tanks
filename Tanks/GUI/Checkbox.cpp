@@ -10,19 +10,18 @@ Checkbox::Checkbox(float size, float x, float y,
 	checkmarkHover = sf::Color(120, 120, 120);
 
 	border.setSize(sf::Vector2f(size, size));
-	border.setOrigin(size / 2.f, size / 2.f);
 	border.setPosition(x, y);
 	border.setFillColor(sf::Color::Transparent);
 	border.setOutlineThickness(4.f);
 	border.setOutlineColor(borderIdle);
 
 	checkmark.setSize(sf::Vector2f(size * 0.88f, size * 0.88f));
-	checkmark.setOrigin(checkmark.getSize() / 2.f);
 	checkmark.setPosition(border.getPosition());
 	checkmark.setFillColor(checkmarkIdle);
 
 	selected = value;
 	lock = false;
+	changed = false;
 }
 
 Checkbox::~Checkbox()
@@ -42,6 +41,7 @@ void Checkbox::update(const float dt, sf::Vector2i& mousePosition)
 		if (!lock && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			selected = !selected;
+			changed = true;
 			lock = true;
 		}
 		else if(lock && !sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -65,9 +65,24 @@ void Checkbox::render(sf::RenderTarget* target)
 	}
 }
 
+sf::Vector2f Checkbox::getPosition() const
+{
+	return border.getPosition();
+}
+
 bool Checkbox::isSelected() const
 {
 	return selected;
+}
+
+bool Checkbox::isChanged() const
+{
+	return changed;
+}
+
+void Checkbox::resetChange()
+{
+	changed = false;
 }
 
 void Checkbox::set(bool value)
