@@ -167,14 +167,14 @@ void SettingsState::initVariables()
 	musicText.setCharacterSize(chSize);
 	soundsText.setCharacterSize(chSize);
 
-	for (int i = 1; i <= settingsTexts.size(); i++)
+	for (int i = 0; i < settingsTexts.size(); i++)
 	{
-		settingsTexts[i - 1].setFont(arial);
-		settingsTexts[i - 1].setCharacterSize(chSize);
-		settingsTexts[i - 1].setPosition(
+		settingsTexts[i].setFont(arial);
+		settingsTexts[i].setCharacterSize(chSize);
+		settingsTexts[i].setPosition(
 			background.getPosition().x - background.getOrigin().x + 20.f,
 			background.getPosition().y - background.getOrigin().y
-			+ 20.f + (i * settingsTexts[i - 1].getGlobalBounds().height + i*50.f));
+			+ 20.f + (settingsTexts[i].getGlobalBounds().height + i*background.getSize().y * 0.15f));
 	}
 
 	float w1 = settingsTexts[0].getPosition().x + settingsTexts[0].getGlobalBounds().width + 10.f;
@@ -182,7 +182,7 @@ void SettingsState::initVariables()
 	float w = background.getSize().x;
 	float y = background.getSize().y;
 
-	ddl_resolutions = new DropDownList<sf::VideoMode>(w * 0.25f, w * 0.25f / 9.f,
+	ddl_resolutions = new DropDownList<sf::VideoMode>(w * 0.25f, w * 0.25f / 12.f,
 		w1, settingsTexts[0].getPosition().y, &fonts.get(Fonts::Arial));
 
 	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
@@ -195,7 +195,7 @@ void SettingsState::initVariables()
 	ddl_resolutions->setActiveValue(settings->resolution,
 		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
 
-	sl_framerate = new Slider(w * 0.25f, w * 0.25f / 9.f,
+	sl_framerate = new Slider(w * 0.25f, w * 0.25f / 12.f,
 		w1, settingsTexts[1].getPosition().y + 10.f, 20, 240, &mousePosWindow);
 	sl_framerate->setFont(&fonts.get(Fonts::Arial));
 	sl_framerate->setValue(settings->framerate);

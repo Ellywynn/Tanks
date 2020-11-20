@@ -12,7 +12,7 @@ Slider::Slider(float w, float h, float x, float y, int minValue,
 	strip.setOutlineThickness(3.f);
 	strip.setOutlineColor(sf::Color(112, 112, 112));
 
-	pointer.setSize(sf::Vector2f(w / 20.f, h * 1.6f));
+	pointer.setSize(sf::Vector2f(w / 20.f, h * 1.4f));
 
 	minCursorPos = strip.getPosition().x;
 	maxCursorPos = strip.getPosition().x + w;
@@ -112,7 +112,7 @@ void Slider::setValue(int val)
 	pointer.setPosition(sf::Vector2f(pointerPosition, strip.getPosition().y 
 		+ strip.getSize().y / 2.f - pointer.getGlobalBounds().height / 2.f));
 	valueText.setPosition(maxCursorPos - valueText.getGlobalBounds().width,
-		strip.getPosition().y - pointer.getGlobalBounds().height / 2.f);
+		strip.getPosition().y - pointer.getGlobalBounds().height / 2.f - strip.getOutlineThickness() * 2.f);
 }
 
 void Slider::setFont(sf::Font* font)
