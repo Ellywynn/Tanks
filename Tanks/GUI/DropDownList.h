@@ -124,39 +124,17 @@ public:
 
 	void add(const T& value, const std::string& textValue)
 	{
-		// if there is no elements in the list, add the first element
+		// if there is no elements in the list, create the first element
+		// and push it twice(the first for closed list and the second for 
 		if (elements.empty())
 		{
-			activeElement.value = value;
-			activeElement.valueText.setString(textValue);
-			activeElement.valueText.setOrigin(activeElement.valueText.getGlobalBounds().width / 2.f,
-				activeElement.valueText.getGlobalBounds().height / 2.f);
-			activeElement.valueText.setPosition(activeElement.border.getPosition());
-			elements.push_back(new DDL_Element<T>(activeElement));
-
-			DDL_Element<T> temp(activeElement);
-			temp.value = value;
-			temp.valueText.setString(textValue);
-			temp.valueText.setOrigin(temp.valueText.getGlobalBounds().width / 2.f,
-				temp.valueText.getGlobalBounds().height / 2.f);
-			sf::Vector2f newPosition(elements.back()->border.getPosition());
-			temp.border.setPosition(newPosition.x, newPosition.y +
-				activeElement.border.getSize().y + activeElement.border.getOutlineThickness());
-			temp.valueText.setPosition(temp.border.getPosition());
-			elements.push_back(new DDL_Element<T>(temp));
+			initActiveElement(value, textValue);
+			addElement(value, textValue);
 		}
+		// if there is an element in the list already, just add the new one
 		else
 		{
-			DDL_Element<T> temp(activeElement);
-			temp.value = value;
-			temp.valueText.setString(textValue);
-			temp.valueText.setOrigin(temp.valueText.getGlobalBounds().width / 2.f,
-				temp.valueText.getGlobalBounds().height / 2.f);
-			sf::Vector2f newPosition(elements.back()->border.getPosition());
-			temp.border.setPosition(newPosition.x, newPosition.y +
-				activeElement.border.getSize().y + activeElement.border.getOutlineThickness());
-			temp.valueText.setPosition(temp.border.getPosition());
-			elements.push_back(new DDL_Element<T>(temp));
+			addElement(value, textValue);
 		}
 	}
 
@@ -195,6 +173,36 @@ private:
 	bool changed;
 
 	sf::Font* textFont;
+
+	void addElement(const T& value, const std::string& textValue)
+	{
+		DDL_Element<T> temp(activeElement);
+		temp.value = value;
+		temp.valueText.setString(textValue);
+		temp.valueText.setOrigin(temp.valueText.getGlobalBounds().width / 2.f,
+			temp.valueText.getGlobalBounds().height / 2.f);
+		sf::Vector2f newPosition(elements.back()->border.getPosition());
+		temp.border.setPosition(newPosition.x, newPosition.y +
+			activeElement.border.getSize().y + activeElement.border.getOutlineThickness());
+		temp.valueText.setPosition(temp.border.getPosition().x
+			+ temp.border.getGlobalBounds().width / 2.f,
+			temp.border.getPosition().y
+			+ temp.border.getGlobalBounds().height / 2.f - 2 * activeElement.border.getOutlineThickness());
+		elements.push_back(new DDL_Element<T>(temp));
+	}
+
+	void initActiveElement(const T& value, const std::string& textValue)
+	{
+		activeElement.value = value;
+		activeElement.valueText.setString(textValue);
+		activeElement.valueText.setOrigin(activeElement.valueText.getGlobalBounds().width / 2.f,
+			activeElement.valueText.getGlobalBounds().height / 2.f);
+		activeElement.valueText.setPosition(activeElement.border.getPosition().x
+			+ activeElement.border.getGlobalBounds().width / 2.f,
+			activeElement.border.getPosition().y
+			+ activeElement.border.getGlobalBounds().height / 2.f - 2 * activeElement.border.getOutlineThickness());
+		elements.push_back(new DDL_Element<T>(activeElement));
+	}
 };
 
 #endif

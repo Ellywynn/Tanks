@@ -8,7 +8,7 @@ Slider::Slider(float w, float h, float x, float y, int minValue,
 	this->mousePosition = mousePos;
 
 	strip.setSize(sf::Vector2f(w, h));
-	strip.setPosition(x, y);
+	strip.setPosition(x, y - strip.getGlobalBounds().height / 2.f);
 	strip.setOutlineThickness(3.f);
 	strip.setOutlineColor(sf::Color(112, 112, 112));
 
@@ -84,13 +84,7 @@ void Slider::update(const float dt)
 				1. We are finding the range that pointer passes from start
 				2. We substract this range from the end of the slider
 			*/
-			float pointerPos = maxCursorPos - stepRange * (maxValue - value);
-			pointer.setPosition(pointerPos + pointer.getSize().x / 2.f,
-				pointer.getPosition().y + pointer.getSize().y / 2.f);
-
-			valueText.setString(std::to_string(value) + measure);
-			this->valueText.setPosition(maxCursorPos - valueText.getGlobalBounds().width,
-				strip.getPosition().y - strip.getSize().y - pointer.getGlobalBounds().height / 2.f);
+			setValue(value);
 		}
 	}
 	else
@@ -113,9 +107,12 @@ void Slider::setValue(int val)
 
 	valueText.setString(std::to_string(value) + measure);
 	float pointerPosition = maxCursorPos -
-		stepRange * (maxValue - value);
+		stepRange * (maxValue - value) - pointer.getSize().x / 2.f;
 
-	pointer.setPosition(sf::Vector2f(pointerPosition, strip.getPosition().y));
+	pointer.setPosition(sf::Vector2f(pointerPosition, strip.getPosition().y 
+		+ strip.getSize().y / 2.f - pointer.getGlobalBounds().height / 2.f));
+	valueText.setPosition(maxCursorPos - valueText.getGlobalBounds().width,
+		strip.getPosition().y - pointer.getGlobalBounds().height / 2.f);
 }
 
 void Slider::setFont(sf::Font* font)
