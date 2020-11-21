@@ -156,21 +156,24 @@ void SettingsState::initVariables()
 	settingsTexts[3].setString("VSynch");
 	
 	sf::VideoMode dflt = sf::VideoMode::getDesktopMode();
-	unsigned int chSize = static_cast<unsigned>(30.f * (window->getSize().x * window->getSize().y)
-		/ (dflt.width * dflt.height));
-	if (chSize < 8u) chSize = 8u;
+	float k = (window->getSize().x / dflt.width);
+	unsigned int chSizeMenuText = static_cast<unsigned>(30.f * k);
+	unsigned int chSizeElement = static_cast<unsigned>(16.f * k);
+
+	if (chSizeMenuText < 10u) chSizeMenuText = 10u;
+	if (chSizeElement < 10u) chSizeElement = 10u;
 
 	musicText.setString("Music");
 	soundsText.setString("Sounds");
 	musicText.setFont(arial);
 	soundsText.setFont(arial);
-	musicText.setCharacterSize(chSize);
-	soundsText.setCharacterSize(chSize);
+	musicText.setCharacterSize(chSizeMenuText);
+	soundsText.setCharacterSize(chSizeMenuText);
 
 	for (int i = 0; i < settingsTexts.size(); i++)
 	{
 		settingsTexts[i].setFont(arial);
-		settingsTexts[i].setCharacterSize(chSize);
+		settingsTexts[i].setCharacterSize(chSizeMenuText);
 		settingsTexts[i].setPosition(
 			background.getPosition().x - background.getOrigin().x + 20.f,
 			background.getPosition().y - background.getOrigin().y
@@ -224,6 +227,12 @@ void SettingsState::initVariables()
 	soundsText.setPosition(
 		sl_soundsVol->getPosition().x - 20.f - soundsText.getGlobalBounds().width,
 		sl_soundsVol->getPosition().y);
+
+	ddl_resolutions->setCharSize(chSizeElement);
+	sl_framerate->setCharSize(chSizeElement);
+	sl_musicVol->setCharSize(chSizeElement);
+	sl_soundsVol->setCharSize(chSizeElement);
+
 }
 
 void SettingsState::loadAssets()

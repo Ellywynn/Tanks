@@ -30,9 +30,11 @@ public:
 	sf::RectangleShape border;
 	sf::Text buttonText;
 	sf::Font* font;
-public: // Functions
+
 	void update(sf::Event& event, const sf::Vector2i& mousePos);
 	void render(sf::RenderTarget& target);
+
+	void setCharSize(unsigned int size);
 
 	void reset();
 	sf::Vector2f getPosition() const;

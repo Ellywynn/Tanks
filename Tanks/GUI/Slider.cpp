@@ -125,6 +125,11 @@ void Slider::setFont(sf::Font* font)
 		strip.getPosition().y - strip.getSize().y - pointer.getGlobalBounds().height / 2.f);
 }
 
+void Slider::setCharSize(unsigned int size)
+{
+	valueText.setCharacterSize(size);
+}
+
 sf::Vector2f Slider::getPosition() const
 {
 	return strip.getPosition();

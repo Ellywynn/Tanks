@@ -17,6 +17,7 @@ public:
 
 	void setValue(int val);
 	void setFont(sf::Font* font);
+	void setCharSize(unsigned int size);
 
 	sf::Vector2f getPosition() const;
 	int getValue() const;

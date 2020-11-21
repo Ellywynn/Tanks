@@ -52,6 +52,11 @@ void Button::render(sf::RenderTarget& target)
 	target.draw(buttonText);
 }
 
+void Button::setCharSize(unsigned int size)
+{
+	buttonText.setCharacterSize(size);
+}
+
 void Button::reset()
 {
 	currentState = ButtonState::IDLE;

@@ -154,6 +154,12 @@ public:
 		elements[0]->valueText.setString(name);
 	}
 
+	void setCharSize(unsigned int size)
+	{
+		for (auto& e : elements)
+			e->valueText.setCharacterSize(size);
+	}
+
 	void resetChange()
 	{
 		changed = false;
