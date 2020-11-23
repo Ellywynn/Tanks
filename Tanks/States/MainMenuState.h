@@ -1,14 +1,16 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
-#include "State.h"
+#include "SettingsState.h"
+#include "GameState.h"
+#include "../GUI/GUI.h"
 
 class MainMenuState : public State
 {
 public:
 	MainMenuState(sf::RenderWindow* window,
 		std::unordered_map<std::string, int>* supportedKeys,
-		std::stack<State*>* states);
+		std::stack<State*>* states, SettingsContainer& settings);
 	~MainMenuState();
 
 	void endState() override;
@@ -32,10 +34,12 @@ private:
 	
 	void quitState() override;
 	void pushGameState();
+	void pushSettingsState();
 
 	sf::Sprite createSprite(sf::Texture& texture);
 private:
 	std::unordered_map<std::string, Button*> buttons;
+	SettingsContainer* settings;
 };
 
 #endif

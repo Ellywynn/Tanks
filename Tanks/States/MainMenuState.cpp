@@ -1,12 +1,11 @@
 #include "MainMenuState.h"
-#include "GameState.h"
 
 MainMenuState::MainMenuState(sf::RenderWindow* window,
 	std::unordered_map<std::string, int>* supportedKeys,
-	std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+	std::stack<State*>* states, SettingsContainer& settings)
+	: State(window, supportedKeys, states),
+	settings(&settings)
 {
-	std::cout << "Main menu State\n";
 	initKeybinds();
 	loadAssets();
 	initSprites();
@@ -39,8 +38,10 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	buttons["Play"] = new Button("Play", 30.f, 100.f, &fonts.get(Fonts::Arial));
-	buttons["Exit"] = new Button("Exit", 30.f, 300.f, &fonts.get(Fonts::Arial));
+	sf::Font& font = fonts.get(Fonts::Arial);
+	buttons["Play"] = new Button("Play", 30.f, 100.f, &font);
+	buttons["Settings"] = new Button("Settings", 30.f, 250.f, &font);
+	buttons["Exit"] = new Button("Exit", 30.f, 350.f, &font);
 }
 
 void MainMenuState::initVariables()
@@ -54,6 +55,8 @@ void MainMenuState::updateButtons()
 		b.second->update(event, mousePosWindow);
 	if (buttons["Play"]->isButtonPressed())
 		pushGameState();
+	if (buttons["Settings"]->isButtonPressed())
+		pushSettingsState();
 	if (buttons["Exit"]->isButtonPressed())
 		quitState();
 }
@@ -92,6 +95,12 @@ void MainMenuState::pushGameState()
 	states->push(new GameState(window, supportedKeys, states));
 }
 
+void MainMenuState::pushSettingsState()
+{
+	buttons["Settings"]->reset();
+	states->push(new SettingsState(window, supportedKeys, states, settings));
+}
+
 sf::Sprite MainMenuState::createSprite(sf::Texture& texture)
 {
 	sf::Sprite sprite(texture);
@@ -100,7 +109,7 @@ sf::Sprite MainMenuState::createSprite(sf::Texture& texture)
 
 void MainMenuState::updateInput(const float dt)
 {
-	
+
 }
 
 void MainMenuState::quitState()

@@ -18,6 +18,9 @@ SettingsState::~SettingsState()
 	delete sl_framerate;
 	delete cb_fullscreen;
 	delete cb_vsynch;
+
+	for (auto& b : buttons)
+		delete b.second;
 }
 
 void SettingsState::updateButtons()
@@ -47,8 +50,11 @@ void SettingsState::updateButtons()
 			delete sl_soundsVol;
 			delete cb_fullscreen;
 			delete cb_vsynch;
+			delete buttons["Apply"];
+			delete buttons["Exit"];
 
 			initVariables();
+			initButtons();
 		}
 		else if (cb_fullscreen->isChanged())
 		{
@@ -196,7 +202,7 @@ void SettingsState::initElements()
 	settingsTexts[2].setString("Fullscreen");
 	settingsTexts[3].setString("VSynch");
 
-	sf::VideoMode dflt = sf::VideoMode::getDesktopMode();
+	sf::VideoMode dflt = sf::VideoMode::getFullscreenModes().front();
 	float k = (float)window->getSize().x / dflt.width;
 	unsigned int chSizeMenuText = static_cast<unsigned>(35.f * k);
 	unsigned int chSizeElement = static_cast<unsigned>(20.f * k);
