@@ -27,6 +27,9 @@ public:
 	void initVariables() override;
 	void loadAssets()    override;
 private:
+	void updateWidgets(const float dt);
+	void initElements();
+private:
 	std::unordered_map<std::string, Button*> buttons;
 
 	SettingsContainer* settings;
@@ -45,8 +48,6 @@ private:
 
 	sf::Text musicText;
 	sf::Text soundsText;
-private:
-	void updateWidgets(const float dt);
 };
 
 #endif

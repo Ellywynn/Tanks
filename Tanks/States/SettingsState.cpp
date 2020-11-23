@@ -33,7 +33,7 @@ void SettingsState::updateButtons()
 		settings->framerate = sl_framerate->getValue();
 		settings->fullscreen = cb_fullscreen->isSelected();
 		settings->vsynch = cb_vsynch->isSelected();
-		
+
 		settings->saveToFile();
 
 		if (ddl_resolutions->isChanged())
@@ -136,103 +136,18 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initButtons()
 {
-	buttons["Apply"] = new Button("Apply", 300.f, 400.f, &fonts.get(Fonts::Arial));
-	buttons["Exit"] = new Button("Exit", 410.f, 400.f, &fonts.get(Fonts::Arial));
+	float w = background.getSize().x * 0.09f;
+	float x = background.getPosition().x + background.getSize().x / 2.f - 20.f - w;
+	float y = background.getPosition().y + background.getSize().y / 2.f - 20.f - w / 1.7f;
+	buttons["Exit"] = new Button("Exit", x, y, &fonts.get(Fonts::Arial), w, w / 1.7f);
+	buttons["Apply"] = new Button("Apply", buttons["Exit"]->getPosition().x - w - 10.f, y,
+		&fonts.get(Fonts::Arial), w, w / 1.7f);
 }
 
 void SettingsState::initVariables()
 {
-	sf::Font& arial = fonts.get(Fonts::Arial);
-
-	background.setSize(sf::Vector2f(window->getSize().x * 0.8f,
-		window->getSize().y * 0.8f));
-	background.setOrigin(background.getSize() / 2.f);
-	background.setPosition(window->getSize().x / 2.f, window->getSize().y / 2.f);
-	background.setFillColor(sf::Color(0, 0, 0, 200));
-
-	settingsTexts[0].setString("Resolution");
-	settingsTexts[1].setString("Max FPS");
-	settingsTexts[2].setString("Fullscreen");
-	settingsTexts[3].setString("VSynch");
-	
-	sf::VideoMode dflt = sf::VideoMode::getDesktopMode();
-	float k = (window->getSize().x / dflt.width);
-	unsigned int chSizeMenuText = static_cast<unsigned>(30.f * k);
-	unsigned int chSizeElement = static_cast<unsigned>(16.f * k);
-
-	if (chSizeMenuText < 10u) chSizeMenuText = 10u;
-	if (chSizeElement < 10u) chSizeElement = 10u;
-
-	musicText.setString("Music");
-	soundsText.setString("Sounds");
-	musicText.setFont(arial);
-	soundsText.setFont(arial);
-	musicText.setCharacterSize(chSizeMenuText);
-	soundsText.setCharacterSize(chSizeMenuText);
-
-	for (int i = 0; i < settingsTexts.size(); i++)
-	{
-		settingsTexts[i].setFont(arial);
-		settingsTexts[i].setCharacterSize(chSizeMenuText);
-		settingsTexts[i].setPosition(
-			background.getPosition().x - background.getOrigin().x + 20.f,
-			background.getPosition().y - background.getOrigin().y
-			+ 20.f + (settingsTexts[i].getGlobalBounds().height + i*background.getSize().y * 0.15f));
-	}
-
-	float w1 = settingsTexts[0].getPosition().x + settingsTexts[0].getGlobalBounds().width + 10.f;
-
-	float w = background.getSize().x;
-	float y = background.getSize().y;
-
-	ddl_resolutions = new DropDownList<sf::VideoMode>(w * 0.25f, w * 0.25f / 12.f,
-		w1, settingsTexts[0].getPosition().y, &fonts.get(Fonts::Arial));
-
-	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
-	for (size_t i = 0; i < availableModes.size(); i++)
-	{
-		ddl_resolutions->add(availableModes[i], std::to_string(availableModes[i].width)
-			+ "x" + std::to_string(availableModes[i].height));
-	}
-
-	ddl_resolutions->setActiveValue(settings->resolution,
-		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
-
-	sl_framerate = new Slider(w * 0.25f, w * 0.25f / 12.f,
-		w1, settingsTexts[1].getPosition().y + 10.f, 20, 240, &mousePosWindow);
-	sl_framerate->setFont(&fonts.get(Fonts::Arial));
-	sl_framerate->setValue(settings->framerate);
-
-	cb_fullscreen = new Checkbox(settingsTexts[2].getGlobalBounds().height,
-		w1,	settingsTexts[2].getPosition().y, settings->fullscreen);
-
-	cb_vsynch = new Checkbox(settingsTexts[3].getGlobalBounds().height,
-		w1,	settingsTexts[3].getPosition().y, settings->vsynch);
-
-	sl_musicVol = new Slider(w * 0.25f, w * 0.25f / 9.f,
-		background.getPosition().x + background.getGlobalBounds().width / 2.f
-		- 20.f - 250.f, ddl_resolutions->getPosition().y, 0, 100, &mousePosWindow, "%");
-	sl_musicVol->setFont(&fonts.get(Fonts::Arial));
-	sl_musicVol->setValue(settings->musicVolume);
-
-	sl_soundsVol = new Slider(w * 0.25f, w * 0.25f / 9.f,
-		sl_musicVol->getPosition().x, sl_framerate->getPosition().y, 0, 100, &mousePosWindow, "%");
-	sl_soundsVol->setFont(&fonts.get(Fonts::Arial));
-	sl_soundsVol->setValue(settings->soundsVolume);
-
-	musicText.setPosition(
-		sl_musicVol->getPosition().x - 20.f - musicText.getGlobalBounds().width,
-		sl_musicVol->getPosition().y);
-
-	soundsText.setPosition(
-		sl_soundsVol->getPosition().x - 20.f - soundsText.getGlobalBounds().width,
-		sl_soundsVol->getPosition().y);
-
-	ddl_resolutions->setCharSize(chSizeElement);
-	sl_framerate->setCharSize(chSizeElement);
-	sl_musicVol->setCharSize(chSizeElement);
-	sl_soundsVol->setCharSize(chSizeElement);
-
+	initElements();
+	initButtons();
 }
 
 void SettingsState::loadAssets()
@@ -264,4 +179,99 @@ void SettingsState::updateWidgets(const float dt)
 	{
 		// set new volume right now
 	}
+}
+
+void SettingsState::initElements()
+{
+	sf::Font& arial = fonts.get(Fonts::Arial);
+
+	background.setSize(sf::Vector2f(window->getSize().x * 0.8f,
+		window->getSize().y * 0.8f));
+	background.setOrigin(background.getSize() / 2.f);
+	background.setPosition(window->getSize().x / 2.f, window->getSize().y / 2.f);
+	background.setFillColor(sf::Color(0, 0, 0, 200));
+
+	settingsTexts[0].setString("Resolution");
+	settingsTexts[1].setString("Max FPS");
+	settingsTexts[2].setString("Fullscreen");
+	settingsTexts[3].setString("VSynch");
+
+	sf::VideoMode dflt = sf::VideoMode::getDesktopMode();
+	float k = (float)window->getSize().x / dflt.width;
+	unsigned int chSizeMenuText = static_cast<unsigned>(35.f * k);
+	unsigned int chSizeElement = static_cast<unsigned>(20.f * k);
+
+	if (chSizeMenuText < 10u) chSizeMenuText = 10u;
+	if (chSizeElement < 10u) chSizeElement = 10u;
+
+	musicText.setString("Music");
+	soundsText.setString("Sounds");
+	musicText.setFont(arial);
+	soundsText.setFont(arial);
+	musicText.setCharacterSize(chSizeMenuText);
+	soundsText.setCharacterSize(chSizeMenuText);
+
+	for (int i = 0; i < settingsTexts.size(); i++)
+	{
+		settingsTexts[i].setFont(arial);
+		settingsTexts[i].setCharacterSize(chSizeMenuText);
+		settingsTexts[i].setPosition(
+			background.getPosition().x - background.getOrigin().x + 20.f,
+			background.getPosition().y - background.getOrigin().y
+			+ 20.f + (settingsTexts[i].getGlobalBounds().height + i * background.getSize().y * 0.15f));
+	}
+
+	float w1 = settingsTexts[0].getPosition().x + settingsTexts[0].getGlobalBounds().width + 20.f;
+
+	float w = background.getSize().x;
+	float y = background.getSize().y;
+
+	ddl_resolutions = new DropDownList<sf::VideoMode>(w * 0.25f, w * 0.25f / 12.f,
+		w1, settingsTexts[0].getPosition().y, &fonts.get(Fonts::Arial));
+
+	std::vector<sf::VideoMode> availableModes = sf::VideoMode::getFullscreenModes();
+	for (size_t i = 0; i < availableModes.size(); i++)
+	{
+		ddl_resolutions->add(availableModes[i], std::to_string(availableModes[i].width)
+			+ "x" + std::to_string(availableModes[i].height));
+	}
+
+	ddl_resolutions->setActiveValue(settings->resolution,
+		std::to_string(settings->resolution.width) + "x" + std::to_string(settings->resolution.height));
+
+	sl_framerate = new Slider(w * 0.25f, w * 0.25f / 12.f,
+		w1, settingsTexts[1].getPosition().y, 20, 240, &mousePosWindow);
+	sl_framerate->setFont(&fonts.get(Fonts::Arial));
+
+	cb_fullscreen = new Checkbox(settingsTexts[3].getGlobalBounds().height,
+		w1, settingsTexts[2].getPosition().y, settings->fullscreen);
+
+	cb_vsynch = new Checkbox(settingsTexts[3].getGlobalBounds().height,
+		w1, settingsTexts[3].getPosition().y, settings->vsynch);
+
+	sl_musicVol = new Slider(w * 0.25f, w * 0.25f / 12.f,
+		background.getPosition().x + background.getGlobalBounds().width / 2.f
+		- 20.f - w * 0.25f, ddl_resolutions->getPosition().y, 0, 100, &mousePosWindow, "%");
+	sl_musicVol->setFont(&fonts.get(Fonts::Arial));
+
+	sl_soundsVol = new Slider(w * 0.25f, w * 0.25f / 12.f,
+		sl_musicVol->getPosition().x, sl_framerate->getPosition().y, 0, 100, &mousePosWindow, "%");
+	sl_soundsVol->setFont(&fonts.get(Fonts::Arial));
+
+	musicText.setPosition(
+		sl_musicVol->getPosition().x - 20.f - musicText.getGlobalBounds().width,
+		settingsTexts[0].getPosition().y);
+
+	soundsText.setPosition(
+		sl_soundsVol->getPosition().x - 20.f - soundsText.getGlobalBounds().width,
+		settingsTexts[1].getPosition().y);
+
+	ddl_resolutions->setCharSize(chSizeElement);
+	sl_framerate->setCharSize(chSizeElement);
+	sl_musicVol->setCharSize(chSizeElement);
+	sl_soundsVol->setCharSize(chSizeElement);
+
+	sl_framerate->setValue(settings->framerate);
+	sl_musicVol->setValue(settings->musicVolume);
+	sl_soundsVol->setValue(settings->soundsVolume);
 }

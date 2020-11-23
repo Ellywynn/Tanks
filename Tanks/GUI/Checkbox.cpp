@@ -16,7 +16,9 @@ Checkbox::Checkbox(float size, float x, float y,
 	border.setOutlineColor(borderIdle);
 
 	checkmark.setSize(sf::Vector2f(size * 0.88f, size * 0.88f));
-	checkmark.setPosition(border.getPosition());
+	checkmark.setOrigin(checkmark.getSize() / 2.f);
+	checkmark.setPosition(border.getPosition().x + border.getSize().x / 2.f,
+		border.getPosition().y + border.getSize().y / 2.f);
 	checkmark.setFillColor(checkmarkIdle);
 
 	selected = value;

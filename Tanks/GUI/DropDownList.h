@@ -90,10 +90,10 @@ public:
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
 							opened = false;
-
 							elements[0]->value = elements[i]->value;
 							elements[0]->valueText.setString(elements[i]->valueText.getString());
 							changed = true;
+							break;
 						}
 					}
 					else
@@ -157,7 +157,16 @@ public:
 	void setCharSize(unsigned int size)
 	{
 		for (auto& e : elements)
+		{
 			e->valueText.setCharacterSize(size);
+			e->valueText.setOrigin(e->valueText.getGlobalBounds().width / 2.f,
+				e->valueText.getGlobalBounds().height / 2.f);
+			e->valueText.setPosition(e->border.getPosition().x
+				+ e->border.getGlobalBounds().width / 2.f,
+				e->border.getPosition().y
+				+ e->border.getGlobalBounds().height / 2.f
+				- 2 * activeElement.border.getOutlineThickness());
+		}
 	}
 
 	void resetChange()
@@ -189,11 +198,12 @@ private:
 			temp.valueText.getGlobalBounds().height / 2.f);
 		sf::Vector2f newPosition(elements.back()->border.getPosition());
 		temp.border.setPosition(newPosition.x, newPosition.y +
-			activeElement.border.getSize().y + activeElement.border.getOutlineThickness());
+			activeElement.border.getSize().y + 2.f*activeElement.border.getOutlineThickness());
 		temp.valueText.setPosition(temp.border.getPosition().x
 			+ temp.border.getGlobalBounds().width / 2.f,
 			temp.border.getPosition().y
-			+ temp.border.getGlobalBounds().height / 2.f - 2 * activeElement.border.getOutlineThickness());
+			+ temp.border.getGlobalBounds().height / 2.f
+			- 2 * activeElement.border.getOutlineThickness());
 		elements.push_back(new DDL_Element<T>(temp));
 	}
 
