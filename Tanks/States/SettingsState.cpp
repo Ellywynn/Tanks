@@ -119,9 +119,9 @@ void SettingsState::render(sf::RenderTarget* target)
 	sl_musicVol->render(window);
 	sl_soundsVol->render(window);
 	sl_framerate->render(window);
-	ddl_resolutions->render(window);
 	cb_fullscreen->render(window);
 	cb_vsynch->render(window);
+	ddl_resolutions->render(window);
 }
 
 void SettingsState::endState()
