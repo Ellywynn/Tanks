@@ -75,6 +75,9 @@
     <ClCompile Include="GUI\Checkbox.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="States\EditorState.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Button.h">
@@ -156,6 +159,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Checkbox.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="States\EditorState.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
